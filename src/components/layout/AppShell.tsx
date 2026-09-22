@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Menu, RotateCcw, Sparkles } from 'lucide-react';
 import { Suspense, useEffect } from 'react';
 import { lazyPage as lazy } from '@/lib/lazyPage';
@@ -17,6 +17,7 @@ import { Logo, ThemeToggle } from './brand';
 import { FarmSwitcher } from './FarmSwitcher';
 import { NAV_PRIMARY, NAV_TOOLS, ENGINE_ICON, type NavItem } from './nav';
 import { TourBar } from './TourBar';
+import { preloadAppPages } from '@/lib/preload';
 
 const AssistantPanel = lazy(() => import('@/features/assistant/AssistantPanel'));
 
@@ -95,6 +96,12 @@ export function AppShell() {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   }, [location.pathname]);
 
+  // Download every page's code in the background once the app is idle, so no click waits on the network.
+  useEffect(() => {
+    if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(() => preloadAppPages(), { timeout: 3000 });
+    else setTimeout(preloadAppPages, 1500);
+  }, []);
+
   return (
     <FarmContextProvider>
       <div className="min-h-dvh lg:grid lg:grid-cols-[16.5rem_1fr]">
@@ -126,21 +133,20 @@ export function AppShell() {
           </header>
 
           <main id="main" className="container-page pb-32 pt-8 sm:pt-12">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={location.pathname}
-                initial={reduce ? false : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduce ? undefined : { opacity: 0, y: -6 }}
-                transition={{ duration: 0.35, ease: EASE }}
-              >
-                <RouteErrorBoundary resetKey={location.pathname}>
-                  <Suspense fallback={<PageSkeleton />}>
-                    <Outlet />
-                  </Suspense>
-                </RouteErrorBoundary>
-              </motion.div>
-            </AnimatePresence>
+            {/* Enter-only transition: the new page renders immediately (no waiting on the old page's
+                exit animation), so a click can never be held up by a transition. */}
+            <motion.div
+              key={location.pathname}
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
+            >
+              <RouteErrorBoundary resetKey={location.pathname}>
+                <Suspense fallback={<PageSkeleton />}>
+                  <Outlet />
+                </Suspense>
+              </RouteErrorBoundary>
+            </motion.div>
           </main>
         </div>
       </div>
