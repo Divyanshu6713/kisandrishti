@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "dataset": "disease-demo-samples",
+    "version": "0.1",
+    "note": "Illustrated leaf samples generated in the browser for the demo. Each carries a reference annotation; the demo classifier returns that annotation with a SIMULATED score so the result screen can be demonstrated. These are not model predictions."
+  },
+  "items": [
+    { "id": "sample-yellow-rust", "title": "Leaf with yellow stripes", "crop": "wheat", "art": "yellow-rust", "label": "yellow-rust", "simulatedScore": 0.86, "alternatives": [{ "label": "leaf-rust", "score": 0.09 }, { "label": "healthy", "score": 0.05 }] },
+    { "id": "sample-leaf-rust", "title": "Leaf with brown spots", "crop": "wheat", "art": "leaf-rust", "label": "leaf-rust", "simulatedScore": 0.81, "alternatives": [{ "label": "yellow-rust", "score": 0.12 }, { "label": "healthy", "score": 0.07 }] },
+    { "id": "sample-mildew", "title": "Leaf with white patches", "crop": "wheat", "art": "powdery-mildew", "label": "powdery-mildew", "simulatedScore": 0.78, "alternatives": [{ "label": "healthy", "score": 0.14 }, { "label": "leaf-rust", "score": 0.08 }] },
+    { "id": "sample-healthy", "title": "Healthy leaf", "crop": "wheat", "art": "healthy", "label": "healthy", "simulatedScore": 0.92, "alternatives": [{ "label": "powdery-mildew", "score": 0.05 }, { "label": "yellow-rust", "score": 0.03 }] }
+  ]
+}

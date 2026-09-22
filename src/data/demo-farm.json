@@ -1,0 +1,330 @@
+{
+  "_meta": {
+    "dataset": "demo-farm",
+    "version": "0.1",
+    "note": "Illustrative sample farm records created for the prototype. Not a real farm, not live data. The scenario is frozen at asOfDate so the demo is reproducible."
+  },
+  "farm": {
+    "id": "demo-farm",
+    "name": "Kisan Drishti Demo Farm",
+    "location": "Karnal, Haryana (sample)",
+    "areaAcres": 5,
+    "crop": "wheat",
+    "variety": "HD 2967",
+    "sowingDate": "2025-11-12",
+    "soilType": "loamy",
+    "irrigation": "tubewell",
+    "method": "organic",
+    "availableInputs": [
+      "cattle-dung",
+      "crop-residue",
+      "vermicompost",
+      "biofertilizers"
+    ],
+    "createdAt": "2025-11-01T00:00:00.000Z",
+    "isDemo": true,
+    "asOfDate": "2026-01-22"
+  },
+  "soilTests": [
+    {
+      "id": "st-2024",
+      "farmId": "demo-farm",
+      "date": "2024-06-10",
+      "lab": "District soil lab (sample)",
+      "source": "demo-dataset",
+      "values": {
+        "ph": 8.0,
+        "nitrogen": 210,
+        "phosphorus": 14,
+        "potassium": 250,
+        "organicCarbon": 0.36,
+        "ec": 0.46
+      }
+    },
+    {
+      "id": "st-2025a",
+      "farmId": "demo-farm",
+      "date": "2025-06-12",
+      "lab": "District soil lab (sample)",
+      "source": "demo-dataset",
+      "values": {
+        "ph": 7.9,
+        "nitrogen": 226,
+        "phosphorus": 16,
+        "potassium": 258,
+        "organicCarbon": 0.39,
+        "ec": 0.44
+      }
+    },
+    {
+      "id": "st-2025b",
+      "farmId": "demo-farm",
+      "date": "2025-11-05",
+      "lab": "District soil lab (sample)",
+      "source": "demo-dataset",
+      "values": {
+        "ph": 7.8,
+        "nitrogen": 238,
+        "phosphorus": 18,
+        "potassium": 262,
+        "organicCarbon": 0.42,
+        "moisture": 19,
+        "ec": 0.42,
+        "sulphur": 11,
+        "zinc": 0.52
+      }
+    }
+  ],
+  "moistureLog": [
+    {
+      "date": "2025-11-26",
+      "pct": 26
+    },
+    {
+      "date": "2025-12-03",
+      "pct": 22
+    },
+    {
+      "date": "2025-12-10",
+      "pct": 28
+    },
+    {
+      "date": "2025-12-17",
+      "pct": 24
+    },
+    {
+      "date": "2025-12-24",
+      "pct": 19
+    },
+    {
+      "date": "2025-12-31",
+      "pct": 27
+    },
+    {
+      "date": "2026-01-07",
+      "pct": 23
+    },
+    {
+      "date": "2026-01-14",
+      "pct": 25
+    },
+    {
+      "date": "2026-01-21",
+      "pct": 19
+    }
+  ],
+  "observations": [
+    {
+      "id": "ob-1",
+      "farmId": "demo-farm",
+      "date": "2026-01-20",
+      "kind": "leaf-colour",
+      "note": "Older leaves slightly pale green in the north-east patch",
+      "severity": "medium",
+      "tag": "pale-leaves"
+    },
+    {
+      "id": "ob-2",
+      "farmId": "demo-farm",
+      "date": "2026-01-18",
+      "kind": "pest",
+      "note": "A few aphids on 2 of 20 tillers checked",
+      "severity": "low",
+      "tag": "aphid"
+    },
+    {
+      "id": "ob-3",
+      "farmId": "demo-farm",
+      "date": "2026-01-15",
+      "kind": "growth",
+      "note": "Good, even tillering across most of the field",
+      "severity": "low",
+      "tag": "good-stand"
+    },
+    {
+      "id": "ob-4",
+      "farmId": "demo-farm",
+      "date": "2026-01-08",
+      "kind": "irrigation",
+      "note": "Irrigation at jointing",
+      "tag": "irrigated"
+    },
+    {
+      "id": "ob-5",
+      "farmId": "demo-farm",
+      "date": "2025-12-20",
+      "kind": "input-applied",
+      "note": "Vermicompost top-up on the weaker half of the field",
+      "tag": "vermicompost"
+    }
+  ],
+  "weather": {
+    "location": "Karnal, Haryana",
+    "current": {
+      "tempC": 13,
+      "humidity": 88,
+      "windKmh": 6,
+      "condition": "fog"
+    },
+    "days": [
+      {
+        "date": "2026-01-22",
+        "tMin": 7,
+        "tMax": 17,
+        "humidity": 88,
+        "rainMm": 0,
+        "windKmh": 6,
+        "condition": "fog"
+      },
+      {
+        "date": "2026-01-23",
+        "tMin": 8,
+        "tMax": 16,
+        "humidity": 90,
+        "rainMm": 0,
+        "windKmh": 5,
+        "condition": "fog"
+      },
+      {
+        "date": "2026-01-24",
+        "tMin": 9,
+        "tMax": 15,
+        "humidity": 91,
+        "rainMm": 4,
+        "windKmh": 9,
+        "condition": "rain"
+      },
+      {
+        "date": "2026-01-25",
+        "tMin": 9,
+        "tMax": 16,
+        "humidity": 87,
+        "rainMm": 2,
+        "windKmh": 8,
+        "condition": "cloudy"
+      },
+      {
+        "date": "2026-01-26",
+        "tMin": 8,
+        "tMax": 18,
+        "humidity": 82,
+        "rainMm": 0,
+        "windKmh": 7,
+        "condition": "partly"
+      },
+      {
+        "date": "2026-01-27",
+        "tMin": 7,
+        "tMax": 19,
+        "humidity": 79,
+        "rainMm": 0,
+        "windKmh": 6,
+        "condition": "sunny"
+      },
+      {
+        "date": "2026-01-28",
+        "tMin": 8,
+        "tMax": 20,
+        "humidity": 76,
+        "rainMm": 0,
+        "windKmh": 7,
+        "condition": "sunny"
+      }
+    ]
+  },
+  "history": {
+    "weekly": [
+      {
+        "week": "2025-11-26",
+        "cropHealth": 80,
+        "diseaseRisk": 12,
+        "moisture": 26
+      },
+      {
+        "week": "2025-12-03",
+        "cropHealth": 82,
+        "diseaseRisk": 14,
+        "moisture": 22
+      },
+      {
+        "week": "2025-12-10",
+        "cropHealth": 84,
+        "diseaseRisk": 18,
+        "moisture": 28
+      },
+      {
+        "week": "2025-12-17",
+        "cropHealth": 85,
+        "diseaseRisk": 22,
+        "moisture": 24
+      },
+      {
+        "week": "2025-12-24",
+        "cropHealth": 84,
+        "diseaseRisk": 30,
+        "moisture": 19
+      },
+      {
+        "week": "2025-12-31",
+        "cropHealth": 82,
+        "diseaseRisk": 36,
+        "moisture": 27
+      },
+      {
+        "week": "2026-01-07",
+        "cropHealth": 81,
+        "diseaseRisk": 44,
+        "moisture": 23
+      },
+      {
+        "week": "2026-01-14",
+        "cropHealth": 78,
+        "diseaseRisk": 55,
+        "moisture": 25
+      }
+    ],
+    "inputs": [
+      {
+        "date": "2025-11-08",
+        "input": "Farmyard manure",
+        "type": "Organic manure",
+        "area": "Whole field"
+      },
+      {
+        "date": "2025-11-12",
+        "input": "Azotobacter + PSB seed treatment",
+        "type": "Biofertilizer",
+        "area": "All seed"
+      },
+      {
+        "date": "2025-12-20",
+        "input": "Vermicompost top-up",
+        "type": "Organic manure",
+        "area": "2.5 acres"
+      }
+    ],
+    "seasons": [
+      {
+        "season": "2023–24",
+        "method": "Conventional",
+        "yieldQPerAcre": 19.1,
+        "recommendationsOffered": 0,
+        "recommendationsFollowed": 0
+      },
+      {
+        "season": "2024–25",
+        "method": "Organic (year 1)",
+        "yieldQPerAcre": 16.2,
+        "recommendationsOffered": 8,
+        "recommendationsFollowed": 5
+      },
+      {
+        "season": "2025–26",
+        "method": "Organic (year 2)",
+        "yieldQPerAcre": null,
+        "recommendationsOffered": 6,
+        "recommendationsFollowed": 4
+      }
+    ]
+  }
+}

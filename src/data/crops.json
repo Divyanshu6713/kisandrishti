@@ -1,0 +1,126 @@
+{
+  "_meta": {
+    "dataset": "crops",
+    "version": "0.1-demo",
+    "note": "General agronomic ranges for the prototype. Stage day-ranges are approximate and vary by variety, sowing date and region. Replace with the verified Kisan Drishti crop dataset."
+  },
+  "items": [
+    {
+      "id": "wheat",
+      "name": "Wheat",
+      "localName": "Gehun",
+      "season": "rabi",
+      "phRange": [6.0, 7.5],
+      "preferredSoils": ["loamy", "clay-loam", "silty"],
+      "saltSensitive": false,
+      "waterNeed": "medium",
+      "moistureFloor": 20,
+      "heatStressAboveC": 32,
+      "diseaseIds": ["yellow-rust", "leaf-rust", "powdery-mildew", "aphid"],
+      "stages": [
+        { "id": "emergence", "name": "Emergence", "fromDay": 0, "toDay": 20, "waterCritical": false, "focus": "Even stand, weed control" },
+        { "id": "cri", "name": "Crown root initiation", "fromDay": 20, "toDay": 30, "waterCritical": true, "focus": "First irrigation is critical" },
+        { "id": "tillering", "name": "Tillering", "fromDay": 30, "toDay": 55, "waterCritical": true, "focus": "Nutrition and tiller count" },
+        { "id": "jointing", "name": "Jointing", "fromDay": 55, "toDay": 80, "waterCritical": true, "focus": "Scout for rust and aphids" },
+        { "id": "heading", "name": "Heading", "fromDay": 80, "toDay": 95, "waterCritical": false, "focus": "Protect flag leaf" },
+        { "id": "flowering", "name": "Flowering", "fromDay": 95, "toDay": 105, "waterCritical": true, "focus": "Avoid heat and water stress" },
+        { "id": "grain-fill", "name": "Grain filling", "fromDay": 105, "toDay": 130, "waterCritical": true, "focus": "Milk and dough stages" },
+        { "id": "maturity", "name": "Maturity", "fromDay": 130, "toDay": 150, "waterCritical": false, "focus": "Harvest timing" }
+      ]
+    },
+    {
+      "id": "rice",
+      "name": "Rice",
+      "localName": "Dhan",
+      "season": "kharif",
+      "phRange": [5.5, 7.0],
+      "preferredSoils": ["clay", "clay-loam", "silty"],
+      "saltSensitive": true,
+      "waterNeed": "high",
+      "moistureFloor": 30,
+      "heatStressAboveC": 35,
+      "diseaseIds": ["rice-blast"],
+      "stages": [
+        { "id": "establishment", "name": "Establishment", "fromDay": 0, "toDay": 25, "waterCritical": true, "focus": "Transplant shock recovery" },
+        { "id": "tillering", "name": "Tillering", "fromDay": 25, "toDay": 55, "waterCritical": true, "focus": "Nutrition and water level" },
+        { "id": "panicle", "name": "Panicle initiation", "fromDay": 55, "toDay": 80, "waterCritical": true, "focus": "Scout for blast" },
+        { "id": "flowering", "name": "Flowering", "fromDay": 80, "toDay": 95, "waterCritical": true, "focus": "Avoid water stress" },
+        { "id": "grain-fill", "name": "Grain filling", "fromDay": 95, "toDay": 120, "waterCritical": false, "focus": "Drain before harvest" }
+      ]
+    },
+    {
+      "id": "maize",
+      "name": "Maize",
+      "localName": "Makka",
+      "season": "kharif",
+      "phRange": [5.8, 7.5],
+      "preferredSoils": ["loamy", "sandy-loam", "silty"],
+      "saltSensitive": true,
+      "waterNeed": "medium",
+      "moistureFloor": 20,
+      "heatStressAboveC": 35,
+      "diseaseIds": [],
+      "stages": [
+        { "id": "emergence", "name": "Emergence", "fromDay": 0, "toDay": 15, "waterCritical": false, "focus": "Stand establishment" },
+        { "id": "vegetative", "name": "Vegetative", "fromDay": 15, "toDay": 50, "waterCritical": false, "focus": "Weed and nutrient management" },
+        { "id": "tasseling", "name": "Tasseling / silking", "fromDay": 50, "toDay": 70, "waterCritical": true, "focus": "Most water-sensitive period" },
+        { "id": "grain-fill", "name": "Grain filling", "fromDay": 70, "toDay": 100, "waterCritical": true, "focus": "Cob development" }
+      ]
+    },
+    {
+      "id": "chickpea",
+      "name": "Chickpea",
+      "localName": "Chana",
+      "season": "rabi",
+      "phRange": [6.0, 8.0],
+      "preferredSoils": ["loamy", "clay-loam", "sandy-loam"],
+      "saltSensitive": true,
+      "waterNeed": "low",
+      "moistureFloor": 15,
+      "heatStressAboveC": 33,
+      "diseaseIds": [],
+      "stages": [
+        { "id": "vegetative", "name": "Vegetative", "fromDay": 0, "toDay": 45, "waterCritical": false, "focus": "Nodulation and branching" },
+        { "id": "flowering", "name": "Flowering", "fromDay": 45, "toDay": 75, "waterCritical": true, "focus": "Pod borer scouting" },
+        { "id": "pod-fill", "name": "Pod filling", "fromDay": 75, "toDay": 110, "waterCritical": true, "focus": "Avoid excess irrigation" }
+      ]
+    },
+    {
+      "id": "mustard",
+      "name": "Mustard",
+      "localName": "Sarson",
+      "season": "rabi",
+      "phRange": [6.0, 7.8],
+      "preferredSoils": ["loamy", "sandy-loam"],
+      "saltSensitive": false,
+      "waterNeed": "low",
+      "moistureFloor": 15,
+      "heatStressAboveC": 30,
+      "diseaseIds": [],
+      "stages": [
+        { "id": "vegetative", "name": "Vegetative", "fromDay": 0, "toDay": 40, "waterCritical": false, "focus": "Thinning and weeding" },
+        { "id": "flowering", "name": "Flowering", "fromDay": 40, "toDay": 75, "waterCritical": true, "focus": "Aphid scouting" },
+        { "id": "pod-fill", "name": "Siliqua filling", "fromDay": 75, "toDay": 120, "waterCritical": false, "focus": "Harvest timing" }
+      ]
+    },
+    {
+      "id": "potato",
+      "name": "Potato",
+      "localName": "Aloo",
+      "season": "rabi",
+      "phRange": [5.2, 6.5],
+      "preferredSoils": ["sandy-loam", "loamy"],
+      "saltSensitive": true,
+      "waterNeed": "high",
+      "moistureFloor": 25,
+      "heatStressAboveC": 30,
+      "diseaseIds": ["late-blight"],
+      "stages": [
+        { "id": "sprout", "name": "Sprout development", "fromDay": 0, "toDay": 25, "waterCritical": false, "focus": "Emergence" },
+        { "id": "vegetative", "name": "Vegetative", "fromDay": 25, "toDay": 45, "waterCritical": false, "focus": "Earthing up" },
+        { "id": "tuber-init", "name": "Tuber initiation", "fromDay": 45, "toDay": 60, "waterCritical": true, "focus": "Consistent moisture" },
+        { "id": "bulking", "name": "Tuber bulking", "fromDay": 60, "toDay": 100, "waterCritical": true, "focus": "Late blight scouting" }
+      ]
+    }
+  ]
+}

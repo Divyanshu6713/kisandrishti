@@ -1,0 +1,54 @@
+/*
+ * Kisan Drishti colour tokens.
+ * Light = warm ivory / pale sand with muted field green and soil brown.
+ * Dark  = deep earthy charcoal with sage green and cream text (designed separately, not inverted).
+ * Values are "R G B" so Tailwind can apply alpha. 3D scenes read their palette from src/theme/scenePalette.ts.
+ */
+:root,
+[data-theme='light'] {
+  --bg: 246 241 232;
+  --surface: 252 249 243;
+  --sunken: 238 231 218;
+  --line: 226 217 202;
+  --ink: 34 35 30;
+  --ink-2: 88 86 76;
+  --ink-3: 112 106 92;
+  --accent: 63 107 69;
+  --accent-soft: 221 231 212;
+  --on-accent: 250 247 240;
+  --earth: 132 88 54;
+  --earth-soft: 238 223 205;
+  --warn: 150 98 18;
+  --warn-soft: 245 229 198;
+  --danger: 163 66 45;
+  --danger-soft: 244 219 210;
+  --info: 55 104 128;
+  --info-soft: 216 230 236;
+  --shadow-soft: 0 1px 2px rgb(60 45 20 / 0.04), 0 10px 30px -18px rgb(60 45 20 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(60 45 20 / 0.05), 0 22px 44px -22px rgb(60 45 20 / 0.28);
+  --grain-opacity: 0.035;
+}
+
+[data-theme='dark'] {
+  --bg: 22 23 19;
+  --surface: 30 31 26;
+  --sunken: 38 40 33;
+  --line: 52 54 45;
+  --ink: 236 230 216;
+  --ink-2: 184 177 162;
+  --ink-3: 150 144 130;
+  --accent: 142 184 132;
+  --accent-soft: 38 52 40;
+  --on-accent: 20 24 16;
+  --earth: 201 157 116;
+  --earth-soft: 58 46 36;
+  --warn: 219 172 84;
+  --warn-soft: 58 47 28;
+  --danger: 222 134 110;
+  --danger-soft: 62 38 33;
+  --info: 128 176 199;
+  --info-soft: 30 45 52;
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.25), 0 12px 30px -20px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.3), 0 24px 48px -24px rgb(0 0 0 / 0.7);
+  --grain-opacity: 0.05;
+}

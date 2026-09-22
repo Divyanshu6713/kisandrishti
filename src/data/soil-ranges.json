@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "dataset": "soil-reference-ranges",
+    "version": "0.1",
+    "note": "Category thresholds commonly used on Indian Soil Health Card reports. Moisture thresholds are indicative for loamy soils only. Labs and states may use different methods and ranges — confirm with your lab."
+  },
+  "items": [
+    {
+      "key": "ph", "label": "Soil pH", "short": "pH", "unit": "", "layer": "topsoil", "scale": [4, 10], "weight": 1.2,
+      "bands": [
+        { "max": 5.5, "status": "strongly-acidic", "label": "Strongly acidic", "tone": "bad" },
+        { "max": 6.5, "status": "acidic", "label": "Slightly acidic", "tone": "ok" },
+        { "max": 7.5, "status": "neutral", "label": "Neutral", "tone": "good" },
+        { "max": 8.5, "status": "alkaline", "label": "Slightly alkaline", "tone": "warn" },
+        { "max": null, "status": "strongly-alkaline", "label": "Strongly alkaline", "tone": "bad" }
+      ],
+      "whyItMatters": "pH controls how available nutrients are to roots. Most field crops prefer near-neutral soil.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "nitrogen", "label": "Available nitrogen", "short": "N", "unit": "kg/ha", "layer": "roots", "scale": [0, 800], "weight": 1.2,
+      "bands": [
+        { "max": 280, "status": "low", "label": "Low", "tone": "bad" },
+        { "max": 560, "status": "medium", "label": "Medium", "tone": "good" },
+        { "max": null, "status": "high", "label": "High", "tone": "ok" }
+      ],
+      "whyItMatters": "Nitrogen drives leaf growth and green colour. Low N often shows as pale older leaves.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "phosphorus", "label": "Available phosphorus", "short": "P", "unit": "kg/ha", "layer": "nutrient", "scale": [0, 50], "weight": 1,
+      "bands": [
+        { "max": 10, "status": "low", "label": "Low", "tone": "bad" },
+        { "max": 25, "status": "medium", "label": "Medium", "tone": "good" },
+        { "max": null, "status": "high", "label": "High", "tone": "ok" }
+      ],
+      "whyItMatters": "Phosphorus supports root development and early vigour.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "potassium", "label": "Available potassium", "short": "K", "unit": "kg/ha", "layer": "nutrient", "scale": [0, 450], "weight": 1,
+      "bands": [
+        { "max": 120, "status": "low", "label": "Low", "tone": "bad" },
+        { "max": 280, "status": "medium", "label": "Medium", "tone": "good" },
+        { "max": null, "status": "high", "label": "High", "tone": "ok" }
+      ],
+      "whyItMatters": "Potassium helps water regulation, stem strength and tolerance to stress.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "organicCarbon", "label": "Organic carbon", "short": "OC", "unit": "%", "layer": "surface", "scale": [0, 1.2], "weight": 1.3,
+      "bands": [
+        { "max": 0.5, "status": "low", "label": "Low", "tone": "bad" },
+        { "max": 0.75, "status": "medium", "label": "Medium", "tone": "ok" },
+        { "max": null, "status": "high", "label": "High", "tone": "good" }
+      ],
+      "whyItMatters": "Organic carbon reflects soil organic matter — the base of soil structure, water holding and soil life.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "moisture", "label": "Soil moisture", "short": "Moisture", "unit": "%", "layer": "roots", "scale": [0, 45], "weight": 0.6,
+      "bands": [
+        { "max": 12, "status": "dry", "label": "Dry", "tone": "bad" },
+        { "max": 20, "status": "moderate", "label": "Getting dry", "tone": "warn" },
+        { "max": 32, "status": "adequate", "label": "Adequate", "tone": "good" },
+        { "max": null, "status": "wet", "label": "Waterlogged risk", "tone": "warn" }
+      ],
+      "whyItMatters": "Volumetric moisture in the root zone. Thresholds here are indicative for loamy soils.",
+      "reference": "Indicative prototype thresholds"
+    },
+    {
+      "key": "ec", "label": "Electrical conductivity", "short": "EC", "unit": "dS/m", "layer": "subsoil", "scale": [0, 4], "weight": 0.5,
+      "bands": [
+        { "max": 1, "status": "normal", "label": "Normal", "tone": "good" },
+        { "max": 3, "status": "caution", "label": "Caution for sensitive crops", "tone": "warn" },
+        { "max": null, "status": "saline", "label": "Saline", "tone": "bad" }
+      ],
+      "whyItMatters": "EC indicates soluble salts. High salts reduce germination and water uptake.",
+      "reference": "Soil Health Card categories"
+    },
+    {
+      "key": "sulphur", "label": "Available sulphur", "short": "S", "unit": "ppm", "layer": "nutrient", "scale": [0, 40], "weight": 0.5,
+      "bands": [
+        { "max": 10, "status": "low", "label": "Low", "tone": "bad" },
+        { "max": 20, "status": "medium", "label": "Medium", "tone": "good" },
+        { "max": null, "status": "high", "label": "High", "tone": "good" }
+      ],
+      "whyItMatters": "Sulphur is needed for protein formation; oilseeds are especially sensitive.",
+      "reference": "Common critical limit (10 ppm)"
+    },
+    {
+      "key": "zinc", "label": "Available zinc", "short": "Zn", "unit": "ppm", "layer": "nutrient", "scale": [0, 3], "weight": 0.5,
+      "bands": [
+        { "max": 0.6, "status": "low", "label": "Deficient", "tone": "bad" },
+        { "max": null, "status": "sufficient", "label": "Sufficient", "tone": "good" }
+      ],
+      "whyItMatters": "Zinc deficiency is widespread in intensively cropped soils and limits growth.",
+      "reference": "Common critical limit (0.6 ppm, DTPA)"
+    }
+  ]
+}

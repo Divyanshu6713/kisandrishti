@@ -1,0 +1,36 @@
+{
+  "name": "kisan-drishti",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kisan Drishti — intelligent farming web prototype (demo data, rule-based analysis engine)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5240",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --port 5240",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.28",
+    "tailwindcss": "3.4",
+    "typescript": "5.9",
+    "vite": "^6.4.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "framer-motion": "^12.43.0",
+    "lucide-react": "^1.47.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^7.18.4",
+    "three": "^0.186.0",
+    "zustand": "^5.0.15"
+  }
+}

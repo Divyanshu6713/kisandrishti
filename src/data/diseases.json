@@ -1,0 +1,141 @@
+{
+  "_meta": {
+    "dataset": "diseases-and-pests",
+    "version": "0.1-demo",
+    "note": "Summarised general extension knowledge used only to drive the prototype rules. Condition windows are indicative. Always confirm field diagnoses with a local agriculture officer / KVK. Replace with the verified Kisan Drishti disease dataset."
+  },
+  "items": [
+    {
+      "id": "yellow-rust",
+      "kind": "disease",
+      "name": "Yellow (stripe) rust",
+      "otherNames": ["Stripe rust", "Peeli ratua"],
+      "crops": ["wheat"],
+      "cause": "Fungus (Puccinia striiformis)",
+      "tag": "yellow-rust",
+      "symptoms": [
+        "Yellow powdery pustules arranged in stripes along leaf veins",
+        "Often starts in patches, on lower or middle leaves",
+        "Yellow powder rubs off on fingers or cloth"
+      ],
+      "favourable": "Cool weather (roughly 10–15 °C) with high humidity, dew, fog or light rain.",
+      "window": { "tempC": [7, 20], "optimumC": [10, 15], "minHumidity": 80, "needsLeafWetness": true, "susceptibleStages": ["tillering", "jointing", "heading"] },
+      "prevention": [
+        "Grow varieties recommended as rust-resistant for your region",
+        "Avoid excess nitrogen, which makes the canopy more susceptible",
+        "Scout regularly from tillering onward, especially after foggy spells"
+      ],
+      "nextSteps": [
+        "Walk the field in a W-pattern and check 20+ plants for striped pustules",
+        "Mark and photograph affected patches to track spread",
+        "Report confirmed patches to your local agriculture officer / KVK for approved control options (organic certification may restrict inputs)"
+      ]
+    },
+    {
+      "id": "leaf-rust",
+      "kind": "disease",
+      "name": "Leaf (brown) rust",
+      "otherNames": ["Brown rust", "Bhura ratua"],
+      "crops": ["wheat"],
+      "cause": "Fungus (Puccinia triticina)",
+      "tag": "leaf-rust",
+      "symptoms": [
+        "Small, round orange-brown pustules scattered on the upper leaf surface",
+        "Pustules are not arranged in stripes",
+        "Heavily affected leaves dry early"
+      ],
+      "favourable": "Moderate temperatures (roughly 15–25 °C) with several hours of leaf wetness.",
+      "window": { "tempC": [10, 30], "optimumC": [15, 25], "minHumidity": 75, "needsLeafWetness": true, "susceptibleStages": ["jointing", "heading", "flowering", "grain-fill"] },
+      "prevention": [
+        "Use resistant varieties and timely sowing",
+        "Remove volunteer wheat plants that carry the fungus between seasons",
+        "Keep nitrogen balanced"
+      ],
+      "nextSteps": [
+        "Check flag and upper leaves for scattered orange-brown pustules",
+        "Record the share of plants affected",
+        "Consult your local agriculture officer / KVK before any treatment"
+      ]
+    },
+    {
+      "id": "powdery-mildew",
+      "kind": "disease",
+      "name": "Powdery mildew",
+      "otherNames": ["Chhachhya"],
+      "crops": ["wheat"],
+      "cause": "Fungus (Blumeria graminis f. sp. tritici)",
+      "tag": "powdery-mildew",
+      "symptoms": [
+        "White to grey powdery patches on leaves and stems",
+        "Patches may turn greyish-brown with age",
+        "More common in dense, shaded canopy"
+      ],
+      "favourable": "Mild temperatures (roughly 15–22 °C), high humidity and dense crop canopy; free water not required.",
+      "window": { "tempC": [10, 25], "optimumC": [15, 22], "minHumidity": 70, "needsLeafWetness": false, "susceptibleStages": ["tillering", "jointing", "heading"] },
+      "prevention": [
+        "Avoid very dense sowing and excess nitrogen",
+        "Improve air movement in the canopy",
+        "Use tolerant varieties where available"
+      ],
+      "nextSteps": [
+        "Inspect lower leaves in dense patches",
+        "Track whether patches spread to upper leaves",
+        "Seek local expert advice before any treatment"
+      ]
+    },
+    {
+      "id": "aphid",
+      "kind": "pest",
+      "name": "Aphids",
+      "otherNames": ["Mahu", "Chepa"],
+      "crops": ["wheat", "mustard"],
+      "cause": "Sap-sucking insects",
+      "tag": "aphid",
+      "symptoms": [
+        "Clusters of small green/dark insects on leaves and ears",
+        "Sticky honeydew on leaves",
+        "Curling or yellowing of young leaves"
+      ],
+      "favourable": "Cool, cloudy and humid weather; populations often build up in mid to late winter.",
+      "window": { "tempC": [8, 26], "optimumC": [12, 22], "minHumidity": 60, "needsLeafWetness": false, "susceptibleStages": ["jointing", "heading", "flowering", "grain-fill"] },
+      "prevention": [
+        "Conserve natural enemies such as ladybird beetles — avoid broad-spectrum sprays",
+        "Monitor with yellow sticky traps",
+        "Avoid excess nitrogen, which favours aphid build-up"
+      ],
+      "nextSteps": [
+        "Count aphids on 10 tillers at several spots in the field",
+        "Check for ladybird beetles and other natural enemies",
+        "Ask your local expert about economic threshold levels before acting"
+      ]
+    },
+    {
+      "id": "rice-blast",
+      "kind": "disease",
+      "name": "Rice blast",
+      "otherNames": ["Jhonka"],
+      "crops": ["rice"],
+      "cause": "Fungus (Magnaporthe oryzae)",
+      "tag": "rice-blast",
+      "symptoms": ["Spindle-shaped leaf spots with grey centres", "Neck of panicle may turn dark and break"],
+      "favourable": "Warm, humid weather with long dew periods and excess nitrogen.",
+      "window": { "tempC": [20, 30], "optimumC": [24, 28], "minHumidity": 85, "needsLeafWetness": true, "susceptibleStages": ["tillering", "panicle", "flowering"] },
+      "prevention": ["Resistant varieties", "Balanced nitrogen", "Clean seed"],
+      "nextSteps": ["Scout leaves and panicle necks", "Consult your local agriculture officer / KVK"]
+    },
+    {
+      "id": "late-blight",
+      "kind": "disease",
+      "name": "Late blight",
+      "otherNames": ["Jhulsa"],
+      "crops": ["potato"],
+      "cause": "Oomycete (Phytophthora infestans)",
+      "tag": "late-blight",
+      "symptoms": ["Water-soaked dark lesions on leaves", "White growth under leaves in humid mornings"],
+      "favourable": "Cool (10–20 °C), cloudy, very humid or drizzly weather.",
+      "window": { "tempC": [8, 24], "optimumC": [12, 20], "minHumidity": 85, "needsLeafWetness": true, "susceptibleStages": ["vegetative", "tuber-init", "bulking"] },
+      "prevention": ["Healthy seed tubers", "Remove volunteer plants and cull piles", "Proper earthing up"],
+      "nextSteps": ["Scout after cloudy, drizzly spells", "Consult your local agriculture officer / KVK"]
+    }
+  ]
+}

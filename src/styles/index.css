@@ -1,0 +1,66 @@
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { background: rgb(var(--bg)); color: rgb(var(--ink)); -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-bg font-sans text-base text-ink antialiased;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+  /* Smooth theme switch only while toggling — never on normal interactions. */
+  html.theme-anim *,
+  html.theme-anim *::before,
+  html.theme-anim *::after {
+    transition: background-color 450ms ease, border-color 450ms ease, color 300ms ease, fill 450ms ease, stroke 450ms ease !important;
+  }
+  ::selection { background: rgb(var(--accent) / 0.22); }
+  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3 { @apply font-semibold text-ink; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-10; }
+
+  .card { @apply rounded-card border border-line/80 bg-surface shadow-soft; }
+  .card-pad { @apply p-5 sm:p-6; }
+  .card-hover { @apply transition-[transform,box-shadow,border-color] duration-300 ease-calm hover:-translate-y-0.5 hover:shadow-lift; }
+
+  .eyebrow { @apply text-label font-semibold uppercase tracking-[0.12em] text-ink-3; }
+
+  .btn { @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-ctl px-4 py-2.5 text-sm font-semibold transition-[background-color,color,box-shadow,transform,filter] duration-200 ease-calm active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50; }
+  .btn-primary { @apply btn bg-accent text-accent-ink shadow-soft hover:brightness-110; }
+  .btn-secondary { @apply btn border border-line bg-surface text-ink hover:bg-sunken; }
+  .btn-ghost { @apply btn text-ink-2 hover:bg-sunken hover:text-ink; }
+  .btn-lg { @apply px-5 py-3 text-base; }
+
+  .field-label { @apply mb-1.5 block text-sm font-medium text-ink-2; }
+  .field { @apply w-full rounded-ctl border border-line bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-ink-3 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20; }
+
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-label font-semibold; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .tabular { font-variant-numeric: tabular-nums; }
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+/* Soft film grain gives flat surfaces a natural, paper-like finish. */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
