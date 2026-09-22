@@ -1,6 +1,8 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Menu, RotateCcw, Sparkles } from 'lucide-react';
-import { lazy, Suspense, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { lazyPage as lazy } from '@/lib/lazyPage';
+import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { NavLink, Outlet, useLocation } from 'react-router';
 import { cn } from '@/lib/utils';
 import { FarmContextProvider } from '@/hooks/useFarmContext';
@@ -132,9 +134,11 @@ export function AppShell() {
                 exit={reduce ? undefined : { opacity: 0, y: -6 }}
                 transition={{ duration: 0.35, ease: EASE }}
               >
-                <Suspense fallback={<PageSkeleton />}>
-                  <Outlet />
-                </Suspense>
+                <RouteErrorBoundary resetKey={location.pathname}>
+                  <Suspense fallback={<PageSkeleton />}>
+                    <Outlet />
+                  </Suspense>
+                </RouteErrorBoundary>
               </motion.div>
             </AnimatePresence>
           </main>

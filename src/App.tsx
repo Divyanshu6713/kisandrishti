@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
+import { lazyPage as lazy } from '@/lib/lazyPage';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { AppShell, PageSkeleton } from '@/components/layout/AppShell';
 import { Toaster } from '@/components/ui/overlay';
