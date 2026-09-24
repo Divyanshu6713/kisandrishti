@@ -15,7 +15,7 @@ export class RouteErrorBoundary extends Component<{ children: ReactNode; resetKe
   }
 
   componentDidCatch(error: unknown) {
-    console.error('[page error]', error);
+    if (import.meta.env.DEV) console.error('[page error]', error);
   }
 
   render() {

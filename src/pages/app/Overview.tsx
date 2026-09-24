@@ -12,6 +12,7 @@ import { Reveal, rise, stagger } from '@/components/ui/motion';
 import { scoreTone } from '@/components/ui/tone';
 import { SourceTags } from '@/components/ui/provenance';
 import { SceneFallback } from '@/three/SceneFallback';
+import { LiveWeatherCard } from '@/features/weather/LiveWeather';
 
 const FieldScene = lazy(() => import('@/three/FieldScene'));
 
@@ -104,10 +105,10 @@ function SummaryStrip({ ctx }: { ctx: FarmContext }) {
     {
       to: '/app/weather',
       icon: CloudSun,
-      label: 'Weather',
+      label: 'Scenario weather',
       value: today ? `${today.tMin}–${today.tMax}` : '—',
       unit: today ? '°C' : '',
-      hint: today ? `${today.humidity}% humidity · sample` : 'No forecast',
+      hint: today ? `${today.humidity}% humidity · demo scenario sample` : 'No forecast',
     },
     {
       to: '/app/organic',
@@ -198,6 +199,7 @@ function OverviewBody({ ctx }: { ctx: FarmContext }) {
         </div>
         <div className="flex flex-col gap-5 lg:col-span-5">
           <AlertCard ctx={ctx} />
+          <LiveWeatherCard />
           <motion.section variants={rise} className="card card-pad">
             <Disclosure
               summary={

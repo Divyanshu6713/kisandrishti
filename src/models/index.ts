@@ -6,3 +6,4 @@ export * from './disease';
 export * from './risk';
 export * from './recommendation';
 export * from './weather';
+export * from './liveWeather';

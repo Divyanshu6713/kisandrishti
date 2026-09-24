@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { cn } from '@/lib/utils';
 import { Logo, ThemeToggle } from '@/components/layout/brand';
 
@@ -8,7 +9,7 @@ const LINKS = [
   { href: '#intelligence', label: 'Intelligence' },
 ];
 
-export function LandingHeader({ onEnter }: { onEnter: () => void }) {
+export function LandingHeader({ onEnter, signedIn }: { onEnter: () => void; signedIn: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
@@ -29,6 +30,15 @@ export function LandingHeader({ onEnter }: { onEnter: () => void }) {
         </nav>
         <div className="ml-auto flex items-center gap-3">
           <ThemeToggle />
+          {signedIn ? (
+            <Link to="/app" className="btn-secondary">
+              Open dashboard
+            </Link>
+          ) : (
+            <Link to="/login" className="btn-ghost">
+              Sign in
+            </Link>
+          )}
           <button type="button" onClick={onEnter} className="btn-primary hidden sm:inline-flex">
             Enter demo
           </button>

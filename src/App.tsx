@@ -4,9 +4,11 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { AppShell, PageSkeleton } from '@/components/layout/AppShell';
 import { Toaster } from '@/components/ui/overlay';
 import { ThemeProvider } from '@/theme/ThemeProvider';
+import { RequireAuth } from '@/components/auth/RequireAuth';
 
 // Every page is code-split; heavy 3D scenes are split again inside the pages.
 const Landing = lazy(() => import('@/pages/Landing'));
+const Login = lazy(() => import('@/pages/Login'));
 const Overview = lazy(() => import('@/pages/app/Overview'));
 const Farms = lazy(() => import('@/pages/app/Farms'));
 const Soil = lazy(() => import('@/pages/app/Soil'));
@@ -32,7 +34,23 @@ export default function App() {
               </Suspense>
             }
           />
-          <Route path="/app" element={<AppShell />}>
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<div className="min-h-dvh bg-bg" />}>
+                <Login />
+              </Suspense>
+            }
+          />
+          {/* Everything under /app requires a session — the shell is not rendered without one. */}
+          <Route
+            path="/app"
+            element={
+              <RequireAuth>
+                <AppShell />
+              </RequireAuth>
+            }
+          >
             <Route index element={<Overview />} />
             <Route path="farms" element={<Farms />} />
             <Route path="soil" element={<Soil />} />

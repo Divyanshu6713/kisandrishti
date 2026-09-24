@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { Menu, RotateCcw, Sparkles } from 'lucide-react';
-import { Suspense, useEffect } from 'react';
+import { LogOut, Menu, RotateCcw, Sparkles } from 'lucide-react';
+import { Suspense, useEffect, useState } from 'react';
 import { lazyPage as lazy } from '@/lib/lazyPage';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { NavLink, Outlet, useLocation } from 'react-router';
@@ -10,6 +10,7 @@ import { ENGINE } from '@/services';
 import { useFarmStore } from '@/state/farmStore';
 import { toast } from '@/state/toastStore';
 import { useUiStore } from '@/state/uiStore';
+import { useAuthStore } from '@/state/authStore';
 import { Drawer } from '@/components/ui/overlay';
 import { EASE } from '@/components/ui/motion';
 import { Skeleton } from '@/components/ui/primitives';
@@ -54,6 +55,45 @@ function NavGroup({ title, items, onNavigate }: { title?: string; items: NavItem
   );
 }
 
+function Account() {
+  const user = useAuthStore((s) => s.session?.user);
+  const [leaving, setLeaving] = useState(false);
+  if (!user) return null;
+  const initials = user.displayName
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+  return (
+    <div className="flex items-center gap-2.5 rounded-ctl px-1">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-soft text-label font-bold text-accent" aria-hidden>
+        {initials}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="flex items-center gap-1.5 truncate text-sm font-semibold text-ink">
+          {user.displayName}
+          {user.isDemo && <span className="chip bg-accent-soft px-1.5 py-0 text-[0.625rem] text-accent">DEMO</span>}
+        </p>
+        <p className="truncate text-label text-ink-3">{user.identifier ?? 'Demo session'}</p>
+      </div>
+      <button
+        type="button"
+        className="btn-ghost shrink-0 p-2"
+        disabled={leaving}
+        onClick={() => {
+          setLeaving(true);
+          void useAuthStore.getState().signOut();
+        }}
+        aria-label="Log out"
+        title="Log out"
+      >
+        <LogOut className="h-4 w-4" aria-hidden />
+      </button>
+    </div>
+  );
+}
+
 function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
   const resetDemo = useFarmStore((s) => s.resetDemo);
   return (
@@ -82,6 +122,9 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
         >
           <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Reset demo farm
         </button>
+        <div className="border-t border-line pt-4">
+          <Account />
+        </div>
       </div>
     </div>
   );

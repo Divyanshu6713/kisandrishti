@@ -9,7 +9,7 @@ const SOURCE_META: Record<SourceTag, { label: string; icon: typeof Database; tit
   'reference-ranges': { label: 'Reference ranges', icon: Ruler, title: 'Published soil-test category ranges' },
   'demo-rules': { label: 'Rule engine', icon: FlaskConical, title: 'Transparent prototype rules — to be replaced by the trained Kisan Drishti model' },
   'sample-forecast': { label: 'Sample forecast', icon: CloudSun, title: 'Bundled sample weather — not live' },
-  'live-weather': { label: 'Live weather', icon: Radio, title: 'Live weather provider' },
+  'live-weather': { label: 'Live weather', icon: Radio, title: 'Live values from Open-Meteo' },
   'model-api': { label: 'Trained model', icon: Cpu, title: 'Kisan Drishti model API' },
 };
 

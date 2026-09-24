@@ -23,7 +23,7 @@ class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode
     return { failed: true };
   }
   componentDidCatch(err: unknown) {
-    console.warn('[3D] scene disabled after an error:', err);
+    if (import.meta.env.DEV) console.warn('[3D] scene disabled after an error:', err);
   }
   render() {
     return this.state.failed ? this.props.fallback : this.props.children;

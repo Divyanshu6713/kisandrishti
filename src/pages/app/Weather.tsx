@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
-import { Cloud, CloudFog, CloudRain, CloudSun, Droplets, Sun, Wind } from 'lucide-react';
+import { Cloud, CloudFog, CloudRain, CloudSun, Droplets, FlaskConical, Sun, Wind } from 'lucide-react';
 import type { WeatherDay } from '@/models';
 import { cn, formatShortDate, formatWeekday } from '@/lib/utils';
 import type { FarmContext } from '@/services';
 import { ScenarioNote, WithFarm } from '@/components/farm/WithFarm';
-import { Counter, Reveal, rise, stagger } from '@/components/ui/motion';
-import { InsufficientData, LevelBadge, PageHeader, Pill } from '@/components/ui/primitives';
+import { Counter, rise, stagger } from '@/components/ui/motion';
+import { Disclosure, InsufficientData, LevelBadge, PageHeader, Pill } from '@/components/ui/primitives';
 import { WhyThis } from '@/components/ui/provenance';
+import { LiveWeatherSection } from '@/features/weather/LiveWeather';
 
 const ICON: Record<WeatherDay['condition'], typeof Sun> = { sunny: Sun, partly: CloudSun, cloudy: Cloud, fog: CloudFog, rain: CloudRain };
 const LABEL: Record<WeatherDay['condition'], string> = { sunny: 'Sunny', partly: 'Partly cloudy', cloudy: 'Cloudy', fog: 'Foggy', rain: 'Light rain' };
@@ -43,64 +44,22 @@ function Forecast({ days }: { days: WeatherDay[] }) {
   );
 }
 
-function WeatherBody({ ctx }: { ctx: FarmContext }) {
+/**
+ * The frozen demo-farm scenario (sample forecast, 22 Jan 2026). It drives the risk story on
+ * the other pages, so it stays — clearly labelled — below the live weather.
+ */
+function ScenarioWeather({ ctx }: { ctx: FarmContext }) {
   const w = ctx.weather;
-  if (!w)
-    return (
-      <>
-        <PageHeader eyebrow="Weather" title="Weather & what it means" />
-        <InsufficientData missing={['Weather forecast']} message="No weather data is available for this farm." />
-      </>
-    );
+  if (!w) return <InsufficientData missing={['Weather forecast']} message="No sample forecast is available for this farm." />;
   const Icon = ICON[w.current.condition];
   return (
     <>
       <ScenarioNote ctx={ctx} />
-      <PageHeader eyebrow="Weather" title="Weather & what it means" description="Not just the forecast — what it means for this crop at this stage." />
-
-      <div className="grid gap-5 lg:grid-cols-12">
-        <Reveal className="card card-pad lg:col-span-4">
-          <div className="flex items-center justify-between">
-            <p className="eyebrow">Now · {w.location}</p>
-            <Pill tone="warn">Sample</Pill>
-          </div>
-          <div className="mt-6 flex items-center gap-4">
-            <Icon className="h-12 w-12 text-warn" aria-hidden />
-            <p className="tabular text-[3.25rem] font-semibold leading-none tracking-tight">
-              <Counter value={w.current.tempC} />°
-            </p>
-          </div>
-          <p className="mt-2 text-ink-2">{LABEL[w.current.condition]}</p>
-          <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-line/70 pt-5 text-sm">
-            <div className="flex items-center gap-2">
-              <Droplets className="h-4 w-4 text-info" aria-hidden />
-              <dt className="sr-only">Humidity</dt>
-              <dd>{w.current.humidity}% humidity</dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <Wind className="h-4 w-4 text-ink-3" aria-hidden />
-              <dt className="sr-only">Wind</dt>
-              <dd>{w.current.windKmh} km/h wind</dd>
-            </div>
-          </dl>
-          <p className="mt-5 text-label text-ink-3">{w.sourceNote}</p>
-        </Reveal>
-        <Reveal className="card card-pad lg:col-span-8" delay={0.05}>
-          <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="text-h3">Next 7 days</h2>
-            <span className="text-sm text-ink-3">
-              {formatShortDate(w.days[0].date)} – {formatShortDate(w.days[w.days.length - 1].date)}
-            </span>
-          </div>
-          <Forecast days={w.days} />
-        </Reveal>
-      </div>
-
-      <section className="mt-10" aria-labelledby="implications">
+      <section aria-labelledby="implications">
         <h2 id="implications" className="text-h2">
           What it means for your {ctx.crop.name.toLowerCase()}
         </h2>
-        <p className="mb-5 text-sm text-ink-3">Weather + crop stage + risk engine · relationships will come from our dataset/model</p>
+        <p className="mb-5 text-sm text-ink-3">Sample forecast + crop stage + risk engine · relationships will come from our dataset/model</p>
         <motion.ul variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid gap-4 md:grid-cols-2">
           {ctx.implications.map((i) => (
             <motion.li key={i.id} variants={rise} className="card card-pad card-hover">
@@ -116,10 +75,66 @@ function WeatherBody({ ctx }: { ctx: FarmContext }) {
           ))}
         </motion.ul>
       </section>
+
+      <Disclosure
+        className="card card-pad mt-5"
+        summary={
+          <span className="flex flex-col">
+            <span className="text-ink">Sample forecast used by the demo scenario</span>
+            <span className="text-label font-normal text-ink-3">
+              {w.location} · {formatShortDate(w.days[0].date)} – {formatShortDate(w.days[w.days.length - 1].date)} · not live
+            </span>
+          </span>
+        }
+      >
+        <div className="grid gap-6 pt-2 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow">Sample · {w.location}</p>
+              <Pill tone="warn">Sample</Pill>
+            </div>
+            <div className="mt-5 flex items-center gap-4">
+              <Icon className="h-10 w-10 text-warn" aria-hidden />
+              <p className="tabular text-h1 font-semibold leading-none">
+                <Counter value={w.current.tempC} />°
+              </p>
+            </div>
+            <p className="mt-2 text-ink-2">{LABEL[w.current.condition]}</p>
+            <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-line/70 pt-4 text-sm">
+              <div className="flex items-center gap-2">
+                <Droplets className="h-4 w-4 text-info" aria-hidden />
+                <dt className="sr-only">Humidity</dt>
+                <dd>{w.current.humidity}% humidity</dd>
+              </div>
+              <div className="flex items-center gap-2">
+                <Wind className="h-4 w-4 text-ink-3" aria-hidden />
+                <dt className="sr-only">Wind</dt>
+                <dd>{w.current.windKmh} km/h wind</dd>
+              </div>
+            </dl>
+            <p className="mt-4 text-label text-ink-3">{w.sourceNote}</p>
+          </div>
+          <div className="lg:col-span-8">
+            <Forecast days={w.days} />
+          </div>
+        </div>
+      </Disclosure>
     </>
   );
 }
 
 export default function Weather() {
-  return <WithFarm>{(ctx) => <WeatherBody ctx={ctx} />}</WithFarm>;
+  return (
+    <>
+      <PageHeader eyebrow="Weather" title="Weather & what it means" description="Live weather for any place in India — and what it means on the farm." />
+      <LiveWeatherSection />
+
+      <div className="mt-14 border-t border-line/80 pt-10">
+        <p className="eyebrow mb-2 flex items-center gap-2">
+          <FlaskConical className="h-3.5 w-3.5" aria-hidden /> Demo farm scenario · sample data
+        </p>
+        <WithFarm>{(ctx) => <ScenarioWeather ctx={ctx} />}</WithFarm>
+      </div>
+    </>
+  );
 }

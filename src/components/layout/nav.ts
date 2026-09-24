@@ -13,6 +13,7 @@ export const NAV_PRIMARY: NavItem[] = [
   { to: '/app/farms', label: 'My Farms', icon: Map },
   { to: '/app/soil', label: 'Soil', icon: Layers },
   { to: '/app/crop', label: 'Crop Health', icon: Sprout },
+  { to: '/app/weather', label: 'Weather', icon: CloudSun },
   { to: '/app/organic', label: 'Organic Farming', icon: Leaf },
   { to: '/app/insights', label: 'Insights', icon: LineChart },
 ];
@@ -22,7 +23,6 @@ export const NAV_TOOLS: NavItem[] = [
   { to: '/app/advisor', label: 'Farm Advisor', icon: Bot },
   { to: '/app/disease', label: 'Disease Analysis', icon: Microscope },
   { to: '/app/risk', label: 'Risk Intelligence', icon: ShieldAlert },
-  { to: '/app/weather', label: 'Weather', icon: CloudSun },
 ];
 
 export const ENGINE_ICON = FlaskConical;
