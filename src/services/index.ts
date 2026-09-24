@@ -13,6 +13,7 @@ export { organicRecommendationService } from './organicRecommendationService';
 export { weatherService } from './weatherService';
 export { recommendationService } from './recommendationService';
 export type { AdvisorReport, DataCheck, FarmHealth } from './recommendationService';
+export { farmActionService } from './farmActionService';
 export { assistantService, SUGGESTED_QUESTIONS } from './assistantService';
 export type { AssistantAnswer } from './assistantService';
 export { loadFarmContext } from './farmContextService';

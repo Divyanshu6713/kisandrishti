@@ -1,4 +1,4 @@
-import { Database, FlaskConical, Ruler, CloudSun, User, Cpu, Radio } from 'lucide-react';
+import { BookOpen, Database, FlaskConical, Ruler, CloudSun, User, Cpu, Radio } from 'lucide-react';
 import type { Basis, SourceTag } from '@/models';
 import { cn } from '@/lib/utils';
 import { Disclosure } from './primitives';
@@ -10,6 +10,7 @@ const SOURCE_META: Record<SourceTag, { label: string; icon: typeof Database; tit
   'demo-rules': { label: 'Rule engine', icon: FlaskConical, title: 'Transparent prototype rules — to be replaced by the trained Kisan Drishti model' },
   'sample-forecast': { label: 'Sample forecast', icon: CloudSun, title: 'Bundled sample weather — not live' },
   'live-weather': { label: 'Live weather', icon: Radio, title: 'Live values from Open-Meteo' },
+  'growing-guide': { label: 'Growing guide', icon: BookOpen, title: 'General container-growing guidance from cited extension sources — approximate' },
   'model-api': { label: 'Trained model', icon: Cpu, title: 'Kisan Drishti model API' },
 };
 

@@ -2,6 +2,9 @@ import type { Basis, Level } from './common';
 
 export type RecCategory = 'nutrient' | 'protection' | 'soil' | 'water' | 'monitoring';
 
+/** When the advice applies, as the rule states it — not a scheduled date. */
+export type RecHorizon = 'now' | 'this-week' | 'next-season';
+
 export interface Recommendation {
   id: string;
   category: RecCategory;
@@ -15,6 +18,10 @@ export interface Recommendation {
   basis: Basis;
   /** Link to the organic practice in the knowledge base, if any. */
   practiceId?: string;
+  /** When it applies. Set by the Farm Advisor; absent on knowledge-base items. */
+  horizon?: RecHorizon;
+  /** Part of the field it concerns, only when a field record names one. */
+  area?: string;
   /** How the recommendation was produced. Never 'model' until a trained model is connected. */
   engine: 'demo-rules' | 'model';
 }

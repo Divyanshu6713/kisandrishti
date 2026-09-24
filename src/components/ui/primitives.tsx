@@ -3,6 +3,7 @@ import { ChevronDown, Info } from 'lucide-react';
 import { useId, useState, type ReactNode } from 'react';
 import type { Level, Tone } from '@/models';
 import { cn } from '@/lib/utils';
+import { useT } from '@/i18n';
 import { EASE } from './motion';
 import { levelTone, priorityTone, toneBg, toneFill, toneText } from './tone';
 
@@ -50,8 +51,8 @@ export function LevelBadge({ level, prefix }: { level: Level; prefix?: string })
 }
 
 export function PriorityBadge({ level }: { level: Level }) {
-  const label = level === 'high' ? 'High priority' : level === 'medium' ? 'Medium priority' : 'Low priority';
-  return <Pill tone={priorityTone[level]}>{label}</Pill>;
+  const t = useT();
+  return <Pill tone={priorityTone[level]}>{t(`priority.${level}`)}</Pill>;
 }
 
 export function Dot({ tone }: { tone: Tone }) {

@@ -123,6 +123,8 @@ export const recommendationService = {
           note: daysBetween(soilReport.testDate, asOf) > 60 ? `Soil test is ${daysBetween(soilReport.testDate, asOf)} days old — levels may have changed.` : undefined,
         },
         practiceId: option?.practice.id,
+        horizon: 'this-week',
+        area: pale?.area,
         engine: 'demo-rules',
       });
     }
@@ -156,6 +158,8 @@ export const recommendationService = {
           ],
           sources: [weather?.source ?? 'sample-forecast', 'demo-rules'],
         },
+        horizon: scan ? 'now' : 'this-week',
+        area: scan?.area,
         engine: 'demo-rules',
       });
     }
@@ -188,6 +192,7 @@ export const recommendationService = {
           sources: ['demo-dataset', weather?.source ?? 'sample-forecast', 'demo-rules'],
           note: 'The moisture floor is an indicative value for loamy soils.',
         },
+        horizon: 'now',
         engine: 'demo-rules',
       });
     }
@@ -209,6 +214,7 @@ export const recommendationService = {
         nextStep: 'Ask your local expert for the economic threshold before any spray.',
         basis: { factors: [{ label: 'Risk score', value: `${pest.score}/100` }, { label: 'Stage', value: growth.stage?.name ?? '—' }], sources: ['demo-rules'] },
         practiceId: traps?.practice.id,
+        horizon: 'this-week',
         engine: 'demo-rules',
       });
     }
@@ -230,6 +236,7 @@ export const recommendationService = {
         nextStep: 'Add green-manure seed to the plan for after this harvest.',
         basis: { factors: [{ label: 'Soil test', value: soilReport.testDate }], sources: ['demo-dataset', 'reference-ranges', 'demo-rules'] },
         practiceId: 'green-manure',
+        horizon: 'next-season',
         engine: 'demo-rules',
       });
     }
@@ -247,6 +254,7 @@ export const recommendationService = {
         why: 'Insufficient data for a reliable nutrient recommendation.',
         nextStep: 'Open Soil → Add soil test.',
         basis: { factors: [], sources: ['demo-rules'] },
+        horizon: 'this-week',
         engine: 'demo-rules',
       });
     }

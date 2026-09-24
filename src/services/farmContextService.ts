@@ -3,6 +3,7 @@ import type {
   Analysis,
   CropHealthReport,
   CropInfo,
+  FarmAction,
   Farm,
   FieldObservation,
   GrowthStatus,
@@ -15,6 +16,7 @@ import type {
   WeatherSnapshot,
 } from '@/models';
 import { cropAnalysisService } from './cropAnalysisService';
+import { farmActionService } from './farmActionService';
 import { farmDataService } from './farmDataService';
 import { organicRecommendationService } from './organicRecommendationService';
 import { recommendationService, type AdvisorReport, type FarmHealth } from './recommendationService';
@@ -25,7 +27,7 @@ import type { FarmHistory } from './data';
 
 /**
  * One call that assembles everything the app knows about a farm, in dependency order:
- *   records → crop stage → soil → weather → risk → crop health → organic → advisor.
+ *   records → crop stage → soil → weather → risk → crop health → organic → advisor → actions.
  * Every page reads this same context, so numbers never disagree between screens.
  */
 export interface FarmContext {
@@ -45,6 +47,8 @@ export interface FarmContext {
   observations: FieldObservation[];
   organic: Analysis<{ items: OrganicRecommendation[]; notes: string[] }>;
   advice: AdvisorReport;
+  /** The advisor's items as the farmer's to-do list (when, where, plan status). */
+  actions: FarmAction[];
   health: FarmHealth;
   history: FarmHistory | null;
   plan: PlannedAction[];
@@ -103,6 +107,7 @@ export async function loadFarmContext(farm: Farm, plan: PlannedAction[]): Promis
     observations: visibleObs,
     organic,
     advice,
+    actions: farmActionService.fromAdvice(advice.items, farmPlan),
     health,
     history,
     plan: farmPlan,

@@ -31,6 +31,20 @@ export interface ScenePalette {
   danger: string;
   water: string;
   soil: [string, string, string, string, string];
+  /** Rooftop: roof slab, parapet/stair room, terracotta pots, water tank, plant parts, city. */
+  slab: string;
+  parapet: string;
+  pot: string;
+  potRim: string;
+  tank: string;
+  leaf: string;
+  leafDark: string;
+  fruit: string;
+  fruitGreen: string;
+  flower: string;
+  aubergine: string;
+  city: string;
+  city2: string;
   hemiSky: string;
   hemiGround: string;
   keyLight: string;
@@ -65,6 +79,19 @@ const light: ScenePalette = {
   danger: '#b5543a',
   water: '#5d9ab8',
   soil: ['#8a6a45', '#7a5a3a', '#6a4d33', '#5a412c', '#4a3626'],
+  slab: '#d9cdb7',
+  parapet: '#efe6d5',
+  pot: '#b0643f',
+  potRim: '#c47a52',
+  tank: '#3b3b36',
+  leaf: '#5f8f45',
+  leafDark: '#467536',
+  fruit: '#c8452f',
+  fruitGreen: '#9cb04a',
+  flower: '#e6c34a',
+  aubergine: '#5b3a5e',
+  city: '#e7dccb',
+  city2: '#dccfba',
   hemiSky: '#fff6e6',
   hemiGround: '#8a7555',
   keyLight: '#fff1d6',
@@ -99,6 +126,19 @@ const dark: ScenePalette = {
   danger: '#de866e',
   water: '#80b0c7',
   soil: ['#5d4630', '#503c29', '#443323', '#392b1e', '#2e2319'],
+  slab: '#4b453b',
+  parapet: '#686052',
+  pot: '#8c4b31',
+  potRim: '#9d5b3d',
+  tank: '#1d1e1b',
+  leaf: '#5d8a4a',
+  leafDark: '#436a36',
+  fruit: '#b84a34',
+  fruitGreen: '#7f9340',
+  flower: '#c9a940',
+  aubergine: '#4b3350',
+  city: '#2b2c26',
+  city2: '#33342d',
   hemiSky: '#a8a38f',
   hemiGround: '#2a2419',
   keyLight: '#f3c98e',

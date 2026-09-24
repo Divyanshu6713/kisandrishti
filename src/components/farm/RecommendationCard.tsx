@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Check, Droplets, Eye, Leaf, Plus, ShieldCheck, Sprout } from 'lucide-react';
 import type { Recommendation } from '@/models';
 import { cn } from '@/lib/utils';
+import { useT } from '@/i18n';
 import { useFarmStore } from '@/state/farmStore';
 import { toast } from '@/state/toastStore';
 import { BasisList } from '@/components/ui/provenance';
@@ -39,11 +40,18 @@ export function usePlanned(farmId: string, recId: string) {
         toast('Added to your plan', title);
       }
     },
+    /** Marks a planned action done (or back to planned). Scores only change when new records come in. */
+    setDone: (title: string, done: boolean) => {
+      if (!planned) return;
+      setPlan({ ...planned, status: done ? 'done' : 'planned', updatedAt: new Date().toISOString() });
+      toast(done ? 'Marked as done' : 'Moved back to your plan', title, done ? 'success' : 'info');
+    },
   };
 }
 
 export function PlanButton({ farmId, rec, compact }: { farmId: string; rec: Recommendation; compact?: boolean }) {
   const { planned, toggle } = usePlanned(farmId, rec.id);
+  const t = useT();
   return (
     <button
       type="button"
@@ -52,7 +60,7 @@ export function PlanButton({ farmId, rec, compact }: { farmId: string; rec: Reco
       className={cn(planned ? 'btn bg-accent-soft text-accent hover:brightness-95' : 'btn-secondary', compact && 'px-3 py-1.5 text-label')}
     >
       {planned ? <Check className="h-4 w-4" aria-hidden /> : <Plus className="h-4 w-4" aria-hidden />}
-      {planned ? 'In plan' : 'Add to plan'}
+      {planned ? t('plan.in') : t('plan.add')}
     </button>
   );
 }

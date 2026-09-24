@@ -4,6 +4,7 @@ import { useMemo, useRef, type ReactNode } from 'react';
 import * as THREE from 'three';
 import type { ScenePalette } from '@/theme/scenePalette';
 import { useTheme } from '@/theme/ThemeProvider';
+import { useFieldFocus } from '@/state/fieldFocusStore';
 import { rng } from '../geometry';
 import { Butterflies, Pollen } from './life';
 import { Atmosphere, CameraRig, Channel, Clouds, CropField, Farmhouse, Ground, PointerGround, Sun, Tree, usePalette } from './parts';
@@ -47,14 +48,19 @@ function Fade({ show, children, speed = 3 }: { show: boolean; children: ReactNod
   return <group ref={g}>{children}</group>;
 }
 
-function Tag({ children, tone = 'accent' }: { children: ReactNode; tone?: 'accent' | 'warn' | 'danger' | 'info' }) {
+function Tag({ children, tone = 'accent', focused }: { children: ReactNode; tone?: 'accent' | 'warn' | 'danger' | 'info'; focused?: boolean }) {
   const cls = {
     accent: 'border-accent/30 text-accent',
     warn: 'border-warn/40 text-warn',
     danger: 'border-danger/40 text-danger',
     info: 'border-info/30 text-info',
   }[tone];
-  return <div className={`pointer-events-none whitespace-nowrap rounded-full border bg-surface/95 px-3 py-1 text-[11px] font-semibold shadow-soft backdrop-blur ${cls}`}>{children}</div>;
+  const ring = { accent: 'ring-accent/15', warn: 'ring-warn/20', danger: 'ring-danger/20', info: 'ring-info/15' }[tone];
+  return (
+    <div className={`pointer-events-none whitespace-nowrap rounded-full border bg-surface/95 px-3 py-1 text-[11px] font-semibold shadow-soft backdrop-blur transition-[transform,box-shadow] duration-300 ease-calm ${cls} ${focused ? `scale-110 shadow-lift ring-4 ${ring}` : ''}`}>
+      {children}
+    </div>
+  );
 }
 
 function DataLayers({ p, show }: { p: ScenePalette; show: boolean }) {
@@ -96,9 +102,17 @@ function DataLayers({ p, show }: { p: ScenePalette; show: boolean }) {
 function PatchMarker({ p, show, tone, label }: { p: ScenePalette; show: boolean; tone: 'warn' | 'accent'; label: string }) {
   const ring = useRef<THREE.Mesh>(null);
   const pin = useRef<THREE.Group>(null);
+  const glow = useRef<THREE.Mesh>(null);
+  const emphasis = useRef(0);
+  // Pointed at from the dashboard action list: the patch fills in and the pin lifts slightly.
+  const focused = useFieldFocus((s) => s.target === 'patch') && show;
   const color = tone === 'warn' ? p.warn : p.node;
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, dt) => {
     const t = clock.elapsedTime;
+    emphasis.current += ((focused ? 1 : 0) - emphasis.current) * Math.min(1, dt * 6);
+    const e = emphasis.current;
+    if (glow.current) glow.current.scale.setScalar(Math.max(0.001, e));
+    if (pin.current) pin.current.scale.setScalar(1 + e * 0.3);
     if (ring.current) {
       const s = 1 + ((t * 0.5) % 1) * 0.35;
       ring.current.scale.set(s, s, 1);
@@ -112,6 +126,11 @@ function PatchMarker({ p, show, tone, label }: { p: ScenePalette; show: boolean;
         <mesh rotation-x={-Math.PI / 2}>
           <ringGeometry args={[PATCH.r - 0.04, PATCH.r, 64]} />
           <meshBasicMaterial color={color} transparent opacity={0.8} depthWrite={false} />
+        </mesh>
+        {/* Sits at canopy height so the tint reads over the crop, not hidden beneath it. */}
+        <mesh ref={glow} rotation-x={-Math.PI / 2} position-y={0.62} scale={0.001}>
+          <circleGeometry args={[PATCH.r, 64]} />
+          <meshBasicMaterial color={color} transparent opacity={0.3} depthWrite={false} />
         </mesh>
         <mesh ref={ring} rotation-x={-Math.PI / 2}>
           <ringGeometry args={[PATCH.r - 0.03, PATCH.r, 64]} />
@@ -128,7 +147,9 @@ function PatchMarker({ p, show, tone, label }: { p: ScenePalette; show: boolean;
           </mesh>
           {show && (
             <Html position={[0, 0.38, 0]} center zIndexRange={[10, 0]}>
-              <Tag tone={tone === 'warn' ? 'warn' : 'accent'}>{label}</Tag>
+              <Tag tone={tone === 'warn' ? 'warn' : 'accent'} focused={focused}>
+                {label}
+              </Tag>
             </Html>
           )}
         </group>

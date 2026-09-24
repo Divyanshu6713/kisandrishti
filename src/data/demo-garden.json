@@ -1,0 +1,23 @@
+{
+  "_meta": {
+    "dataset": "demo-garden",
+    "version": "0.1",
+    "note": "Illustrative sample rooftop created for the prototype. Not a real garden. Planting dates are stored as 'days ago' and resolved against today, so the demo's growth stages move with the calendar and match the live weather shown beside them."
+  },
+  "garden": {
+    "id": "demo-rooftop",
+    "name": "Demo Terrace Garden",
+    "location": "Pune (sample)",
+    "areaSqFt": 40,
+    "sunHours": 5,
+    "containers": "clay",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "isDemo": true,
+    "plants": [
+      { "id": "g-tomato", "plantId": "tomato", "count": 4, "plantedDaysAgo": 38 },
+      { "id": "g-chilli", "plantId": "chilli", "count": 3, "plantedDaysAgo": 58 },
+      { "id": "g-spinach", "plantId": "spinach", "count": 6, "plantedDaysAgo": 27 },
+      { "id": "g-coriander", "plantId": "coriander", "count": 3, "plantedDaysAgo": 12 }
+    ]
+  }
+}

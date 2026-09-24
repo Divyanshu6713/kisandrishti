@@ -7,3 +7,5 @@ export * from './risk';
 export * from './recommendation';
 export * from './weather';
 export * from './liveWeather';
+export * from './action';
+export * from './garden';

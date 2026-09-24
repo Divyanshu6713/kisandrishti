@@ -3,6 +3,8 @@ import { Moon, Sun } from 'lucide-react';
 import { Link } from 'react-router';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/theme/ThemeProvider';
+import { LANGUAGES } from '@/i18n';
+import { usePrefs } from '@/state/prefsStore';
 
 export const BRAND = {
   name: 'Kisan Drishti',
@@ -21,11 +23,11 @@ export function LogoMark({ className }: { className?: string }) {
   );
 }
 
-export function Logo({ to = '/', className }: { to?: string; className?: string }) {
+export function Logo({ to = '/', className, wordmarkClassName }: { to?: string; className?: string; wordmarkClassName?: string }) {
   return (
     <Link to={to} className={cn('group inline-flex items-center gap-2.5 rounded-ctl', className)} aria-label={`${BRAND.name} home`}>
       <LogoMark className="h-8 w-8 transition-transform duration-500 ease-calm group-hover:rotate-[-6deg]" />
-      <span className="text-[1.05rem] font-bold tracking-tight">{BRAND.name}</span>
+      <span className={cn('whitespace-nowrap text-[1.05rem] font-bold tracking-tight', wordmarkClassName)}>{BRAND.name}</span>
     </Link>
   );
 }
@@ -54,5 +56,29 @@ export function ThemeToggle({ className }: { className?: string }) {
         {dark ? <Moon className="h-3.5 w-3.5 text-accent" aria-hidden /> : <Sun className="h-3.5 w-3.5 text-warn" aria-hidden />}
       </motion.span>
     </button>
+  );
+}
+
+/** EN | हि switch. The whole shell and the field home follow it immediately. */
+export function LanguageToggle({ className }: { className?: string }) {
+  const lang = usePrefs((s) => s.language) ?? 'en';
+  const setLanguage = usePrefs((s) => s.setLanguage);
+  return (
+    <div role="radiogroup" aria-label="Language / भाषा" className={cn('inline-flex h-8 shrink-0 items-center rounded-full border border-line bg-sunken p-0.5 text-label font-semibold', className)}>
+      {LANGUAGES.map((l) => (
+        <button
+          key={l.id}
+          type="button"
+          role="radio"
+          aria-checked={lang === l.id}
+          lang={l.id}
+          title={l.native}
+          onClick={() => setLanguage(l.id)}
+          className={cn('h-6 min-w-[2rem] rounded-full px-2 transition-colors', lang === l.id ? 'bg-surface text-ink shadow-soft' : 'text-ink-3 hover:text-ink-2')}
+        >
+          {l.id === 'en' ? 'EN' : 'हि'}
+        </button>
+      ))}
+    </div>
   );
 }

@@ -1,0 +1,327 @@
+{
+  "_meta": {
+    "dataset": "rooftop-plants",
+    "version": "0.1-demo",
+    "note": "General container-growing guidance for the prototype. Sun-hour bands and 'containers dry fast' guidance follow the cited extension sources. Stage day-ranges, container sizes and pot footprints are approximate planning values compiled for the prototype; they vary with variety, season and care, and must be verified by the Kisan Drishti team (e.g. against ICAR-IIHR / state agricultural university guidance) before release. Nutrient notes are what to watch for — not a diagnosis and never a dose."
+  },
+  "sources": [
+    {
+      "id": "unh",
+      "title": "Growing Vegetables in Containers (fact sheet)",
+      "publisher": "University of New Hampshire Extension",
+      "url": "https://extension.unh.edu/resource/growing-vegetables-containers-fact-sheet"
+    },
+    {
+      "id": "clemson",
+      "title": "Container Vegetable Gardening (factsheet)",
+      "publisher": "Clemson University Home & Garden Information Center",
+      "url": "https://hgic.clemson.edu/factsheet/container-vegetable-gardening/"
+    },
+    {
+      "id": "ucanr",
+      "title": "Growing Vegetables in Less Than 6 Hours of Sun",
+      "publisher": "UC Master Gardeners of Placer County",
+      "url": "https://ucanr.edu/site/uc-master-gardeners-placer-county/article/growing-vegetables-less-6-hours-sun"
+    },
+    {
+      "id": "lpi",
+      "title": "Carotenoids",
+      "publisher": "Linus Pauling Institute, Oregon State University",
+      "url": "https://lpi.oregonstate.edu/mic/dietary-factors/phytochemicals/carotenoids"
+    }
+  ],
+  "items": [
+    {
+      "id": "tomato",
+      "name": "Tomato",
+      "localName": "Tamatar",
+      "nameHi": "टमाटर",
+      "kind": "fruiting",
+      "startsFrom": "transplant",
+      "sun": { "min": 6, "ideal": 8 },
+      "unit": "pot",
+      "container": { "minLitres": 20, "minDepthCm": 30, "footprintSqFt": 2 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 25 },
+        { "id": "flowering", "from": 25, "to": 45 },
+        { "id": "fruit", "from": 45, "to": 65 },
+        { "id": "harvest", "from": 65, "to": 120 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Steady leaf and root growth. Compost mixed into the potting mix carries the plant for the first weeks; heavy nitrogen now gives leaves instead of flowers.",
+          "watch": ["Pale older leaves — can mean low nitrogen", "Purplish leaf undersides on young plants — often cold, sometimes low phosphorus"]
+        },
+        "flowering": {
+          "focus": "Flowers and first fruit set. Keep moisture even and top-dress with compost or vermicompost.",
+          "watch": ["Flowers dropping — heat, a dry pot or uneven watering", "Lots of leaf but few flowers — too much nitrogen"]
+        },
+        "fruit": {
+          "focus": "Fruit filling. Even moisture matters most now; feed lightly with compost.",
+          "watch": ["Dark, sunken patch at the fruit's base (blossom-end rot) — linked to calcium reaching the fruit, usually from uneven watering", "Scorched leaf edges — can mean low potassium"]
+        },
+        "harvest": {
+          "focus": "Keep picking and keep feeding lightly so the plant sets more fruit.",
+          "watch": ["Cracked fruit — often a heavy watering after a dry spell"]
+        }
+      },
+      "harvestNote": "Pick when fully coloured and slightly soft.",
+      "sources": ["unh", "clemson", "ucanr"]
+    },
+    {
+      "id": "chilli",
+      "name": "Chilli",
+      "localName": "Mirch",
+      "nameHi": "मिर्च",
+      "kind": "fruiting",
+      "startsFrom": "transplant",
+      "sun": { "min": 6, "ideal": 8 },
+      "unit": "pot",
+      "container": { "minLitres": 10, "minDepthCm": 25, "footprintSqFt": 1.5 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 30 },
+        { "id": "flowering", "from": 30, "to": 50 },
+        { "id": "fruit", "from": 50, "to": 70 },
+        { "id": "harvest", "from": 70, "to": 160 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Build a sturdy bush. Compost in the mix; avoid over-feeding with nitrogen.",
+          "watch": ["Pale older leaves — can mean low nitrogen", "Curled, crinkled leaves — check the undersides for mites, thrips or aphids"]
+        },
+        "flowering": {
+          "focus": "Flowering. Even watering and a compost top-dress help flowers hold.",
+          "watch": ["Flowers dropping — very hot days or a pot that dried out"]
+        },
+        "fruit": {
+          "focus": "Fruit filling. Keep moisture steady; feed lightly.",
+          "watch": ["Small, few fruit — too little sun is a common cause on shaded roofs"]
+        },
+        "harvest": {
+          "focus": "Regular picking keeps the plant producing.",
+          "watch": ["Yellowing across the plant late in the season — feed lightly with compost"]
+        }
+      },
+      "harvestNote": "Pick green or let them turn red — both are ready.",
+      "sources": ["unh", "clemson", "ucanr"]
+    },
+    {
+      "id": "brinjal",
+      "name": "Brinjal",
+      "localName": "Baingan",
+      "nameHi": "बैंगन",
+      "kind": "fruiting",
+      "startsFrom": "transplant",
+      "sun": { "min": 6, "ideal": 8 },
+      "unit": "pot",
+      "container": { "minLitres": 15, "minDepthCm": 30, "footprintSqFt": 2 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 30 },
+        { "id": "flowering", "from": 30, "to": 50 },
+        { "id": "fruit", "from": 50, "to": 65 },
+        { "id": "harvest", "from": 65, "to": 160 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Leaf and root growth. Compost in the mix is enough for now.",
+          "watch": ["Pale older leaves — can mean low nitrogen"]
+        },
+        "flowering": {
+          "focus": "Flowering. Keep watering even; top-dress with compost.",
+          "watch": ["Flowers dropping — heat or a dry pot"]
+        },
+        "fruit": {
+          "focus": "Fruit filling. Steady moisture and light feeding.",
+          "watch": ["Holes in shoots or fruit — check for shoot and fruit borer"]
+        },
+        "harvest": {
+          "focus": "Pick often; the plant keeps fruiting for months with light feeding.",
+          "watch": ["Dull, seedy fruit — picked too late"]
+        }
+      },
+      "harvestNote": "Pick while the skin is still glossy.",
+      "sources": ["unh", "clemson", "ucanr"]
+    },
+    {
+      "id": "okra",
+      "name": "Okra",
+      "localName": "Bhindi",
+      "nameHi": "भिंडी",
+      "kind": "fruiting",
+      "startsFrom": "seed",
+      "sun": { "min": 6, "ideal": 8 },
+      "unit": "pot",
+      "container": { "minLitres": 15, "minDepthCm": 30, "footprintSqFt": 1.5 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 40 },
+        { "id": "flowering", "from": 40, "to": 50 },
+        { "id": "fruit", "from": 50, "to": 55 },
+        { "id": "harvest", "from": 55, "to": 110 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Okra likes warmth. Compost in the mix; do not over-water young plants.",
+          "watch": ["Yellow veins on leaves — look for whiteflies (a sign of a virus spread by them)"]
+        },
+        "flowering": {
+          "focus": "Flowering. Keep watering regular.",
+          "watch": ["Flowers dropping — a dry pot"]
+        },
+        "fruit": {
+          "focus": "Pods grow fast — a few days from flower to pick.",
+          "watch": ["Tough pods — picked too late"]
+        },
+        "harvest": {
+          "focus": "Pick every day or two; feed lightly with compost.",
+          "watch": ["Fewer pods — the plant needs picking and a little feeding"]
+        }
+      },
+      "harvestNote": "Pick small, tender pods every day or two.",
+      "sources": ["unh", "clemson", "ucanr"]
+    },
+    {
+      "id": "spinach",
+      "name": "Spinach",
+      "localName": "Palak",
+      "nameHi": "पालक",
+      "kind": "leafy",
+      "startsFrom": "seed",
+      "sun": { "min": 3, "ideal": 5 },
+      "unit": "bed",
+      "container": { "minDepthCm": 15, "footprintSqFt": 1 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 30 },
+        { "id": "harvest", "from": 30, "to": 75 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Leaf growth runs on nitrogen. Compost in the mix; keep the soil evenly moist.",
+          "watch": ["Evenly pale or yellow leaves — low nitrogen or a waterlogged pot"]
+        },
+        "harvest": {
+          "focus": "Cut outer leaves and let the centre regrow; a thin compost top-dress after cutting helps.",
+          "watch": ["A tall central stalk (bolting) — heat makes palak flower early; afternoon shade delays it"]
+        }
+      },
+      "harvestNote": "Cut outer leaves; the centre keeps growing.",
+      "sources": ["unh", "ucanr"]
+    },
+    {
+      "id": "methi",
+      "name": "Fenugreek",
+      "localName": "Methi",
+      "nameHi": "मेथी",
+      "kind": "leafy",
+      "startsFrom": "seed",
+      "sun": { "min": 3, "ideal": 5 },
+      "unit": "bed",
+      "container": { "minDepthCm": 15, "footprintSqFt": 1 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 25 },
+        { "id": "harvest", "from": 25, "to": 45 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Quick crop. Compost in the mix is usually enough.",
+          "watch": ["Pale, thin plants — sown too thickly or too little light"]
+        },
+        "harvest": {
+          "focus": "Cut young shoots; resow every few weeks for a steady supply.",
+          "watch": ["Bitter, tough leaves — left too long"]
+        }
+      },
+      "harvestNote": "Cut young shoots; resow every few weeks.",
+      "sources": ["unh", "ucanr"]
+    },
+    {
+      "id": "coriander",
+      "name": "Coriander",
+      "localName": "Dhaniya",
+      "nameHi": "धनिया",
+      "kind": "herb",
+      "startsFrom": "seed",
+      "sun": { "min": 4, "ideal": 6 },
+      "unit": "bed",
+      "container": { "minDepthCm": 15, "footprintSqFt": 1 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 35 },
+        { "id": "harvest", "from": 35, "to": 60 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Keep the soil evenly moist; compost in the mix.",
+          "watch": ["Yellowing — a waterlogged pot or too little light"]
+        },
+        "harvest": {
+          "focus": "Cut leaves before flower stalks form; resow every few weeks.",
+          "watch": ["Flower stalks — heat makes dhaniya bolt; some shade helps"]
+        }
+      },
+      "harvestNote": "Cut leaves before it flowers.",
+      "sources": ["unh", "ucanr"]
+    },
+    {
+      "id": "mint",
+      "name": "Mint",
+      "localName": "Pudina",
+      "nameHi": "पुदीना",
+      "kind": "herb",
+      "startsFrom": "cutting",
+      "sun": { "min": 3, "ideal": 5 },
+      "unit": "pot",
+      "container": { "minLitres": 8, "minDepthCm": 15, "footprintSqFt": 1 },
+      "stages": [
+        { "id": "growing", "from": 0, "to": 40 },
+        { "id": "harvest", "from": 40, "to": 365 }
+      ],
+      "nutrients": {
+        "growing": {
+          "focus": "Roots spread fast — its own pot keeps it from taking over others.",
+          "watch": ["Leggy stems — too little light"]
+        },
+        "harvest": {
+          "focus": "Pinch tops often to keep it bushy; top-dress with compost now and then.",
+          "watch": ["Small leaves — the pot is root-bound; divide and repot"]
+        }
+      },
+      "harvestNote": "Pinch the tops; it grows back.",
+      "sources": ["unh", "ucanr"]
+    }
+  ],
+  "insights": [
+    {
+      "id": "lycopene",
+      "title": "Tomatoes are the main source of lycopene",
+      "body": "Lycopene is a red carotenoid pigment. Researchers estimate about 80% of the lycopene in the US diet comes from tomatoes and tomato products.",
+      "source": "lpi",
+      "plants": ["tomato"]
+    },
+    {
+      "id": "clay-pots",
+      "title": "Clay pots need water more often",
+      "body": "Clay pots are porous, so water also evaporates through their sides. Small pots dry out faster than large ones.",
+      "source": "clemson",
+      "containers": ["clay"]
+    },
+    {
+      "id": "check-daily",
+      "title": "On a hot roof, check pots twice a day",
+      "body": "Containers on concrete in full sun dry very quickly. Feel the soil at least once a day, and twice on hot, dry or windy days.",
+      "source": "clemson"
+    },
+    {
+      "id": "shade-greens",
+      "title": "Greens grow with as little as 3 hours of sun",
+      "body": "Leafy greens tolerate shade far better than fruiting crops. Tomato and chilli need the most sun and warmth.",
+      "source": "ucanr",
+      "plants": ["spinach", "methi", "coriander", "mint"]
+    },
+    {
+      "id": "bolting",
+      "title": "A little shade keeps palak leafy for longer",
+      "body": "Crops that flower (bolt) quickly in hot weather, such as spinach and lettuce, keep growing longer with some shade.",
+      "source": "ucanr",
+      "plants": ["spinach", "coriander"]
+    }
+  ]
+}

@@ -121,7 +121,8 @@
       "kind": "leaf-colour",
       "note": "Older leaves slightly pale green in the north-east patch",
       "severity": "medium",
-      "tag": "pale-leaves"
+      "tag": "pale-leaves",
+      "area": "North-east patch"
     },
     {
       "id": "ob-2",

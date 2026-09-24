@@ -3,6 +3,14 @@
  * Light = warm ivory / pale sand with muted field green and soil brown.
  * Dark  = deep earthy charcoal with sage green and cream text (designed separately, not inverted).
  * Values are "R G B" so Tailwind can apply alpha. 3D scenes read their palette from src/theme/scenePalette.ts.
+ *
+ * Roles (see docs/DESIGN_SYSTEM.md):
+ *   bg / surface / sunken / line  — warm neutral foundation (page, cards, wells, borders)
+ *   ink / ink-2 / ink-3           — warm charcoal text: primary, secondary, metadata
+ *   accent                        — muted field green: primary actions, selection, healthy
+ *   earth                         — soil brown: soil and organic context
+ *   clay                          — terracotta: sparing warmth (rooftop pots, markers, highlights). Never a status colour.
+ *   warn / danger / info          — status only, always paired with an icon or a word
  */
 :root,
 [data-theme='light'] {
@@ -18,6 +26,8 @@
   --on-accent: 250 247 240;
   --earth: 132 88 54;
   --earth-soft: 238 223 205;
+  --clay: 170 88 58;
+  --clay-soft: 245 225 212;
   --warn: 150 98 18;
   --warn-soft: 245 229 198;
   --danger: 163 66 45;
@@ -42,6 +52,8 @@
   --on-accent: 20 24 16;
   --earth: 201 157 116;
   --earth-soft: 58 46 36;
+  --clay: 216 144 108;
+  --clay-soft: 62 42 33;
   --warn: 219 172 84;
   --warn-soft: 58 47 28;
   --danger: 222 134 110;

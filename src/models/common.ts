@@ -14,6 +14,7 @@ export type SourceTag =
   | 'demo-rules' //        hand-written prototype rules — to be replaced by the trained model
   | 'sample-forecast' //   bundled sample weather, not live
   | 'live-weather' //      live API (only when enabled)
+  | 'growing-guide' //     general container-growing guidance from cited extension sources
   | 'model-api'; //        our trained model / backend (future)
 
 export interface BasisFactor {

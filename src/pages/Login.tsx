@@ -12,6 +12,7 @@ import { authMisconfigured, authProvider, AuthError, isEmail, parseIdentifier } 
 import { useAuthStore } from '@/state/authStore';
 import { useFarmStore } from '@/state/farmStore';
 import { useTourStore } from '@/state/tourStore';
+import { usePrefs } from '@/state/prefsStore';
 
 type View = 'signin' | 'forgot';
 const MAX_TRIES = 5;
@@ -171,7 +172,13 @@ export default function Login() {
     setBusy('demo');
     try {
       useFarmStore.getState().selectFarm(DEMO_FARM_ID);
-      if (params.get('tour') === '1') useTourStore.getState().start();
+      if (params.get('tour') === '1') {
+        // The guided tour is a field-farm walkthrough: skip first-run setup, keep any language already chosen.
+        useTourStore.getState().start();
+        const prefs = usePrefs.getState();
+        if (!prefs.language) prefs.setLanguage('en');
+        prefs.setMode('field');
+      }
       await useAuthStore.getState().signInDemo(remember);
       clearEndReason();
     } catch (e) {

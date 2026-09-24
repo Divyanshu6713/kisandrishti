@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 import { DEMO_FARM_ID } from '@/services';
 import { useFarmStore } from '@/state/farmStore';
 import { useTourStore } from '@/state/tourStore';
+import { usePrefs } from '@/state/prefsStore';
 import { useAuthStore } from '@/state/authStore';
 import { Hero } from '@/features/landing/Hero';
 import { Journey } from '@/features/landing/Journey';
@@ -19,6 +20,9 @@ export default function Landing() {
     }
     useFarmStore.getState().selectFarm(DEMO_FARM_ID);
     useTourStore.getState().start();
+    const prefs = usePrefs.getState();
+    if (!prefs.language) prefs.setLanguage('en');
+    prefs.setMode('field');
     navigate('/app');
   };
   return (

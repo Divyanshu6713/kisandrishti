@@ -45,6 +45,8 @@ export interface FieldObservation {
   severity?: Level;
   /** Structured tag the engines can read (e.g. 'pale-leaves', 'aphid', 'yellow-rust'). */
   tag?: string;
+  /** Where in the field, as the farmer described it (e.g. 'North-east patch'). */
+  area?: string;
 }
 
 /** A recommendation the farmer chose to act on (drives the "improved farm" state). */

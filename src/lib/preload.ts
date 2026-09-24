@@ -18,6 +18,12 @@ export function preloadAppPages() {
     () => import('@/pages/app/Risk'),
     () => import('@/pages/app/Weather'),
     () => import('@/pages/app/Farms'),
+    () => import('@/pages/app/garden/Garden'),
+    () => import('@/pages/app/garden/Sunlight'),
+    () => import('@/pages/app/garden/Nutrients'),
+    () => import('@/pages/app/garden/Quantity'),
+    () => import('@/pages/app/garden/GardenSetup'),
+    () => import('@/three/RooftopScene'),
     () => import('@/three/PlantStudio'),
     () => import('@/three/SoilScene'),
   ];
