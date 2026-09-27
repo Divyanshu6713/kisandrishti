@@ -1,4 +1,4 @@
-import { Bot, CloudSun, FlaskConical, Flower2, Home, Layers, LineChart, Map, Microscope, Ruler, Settings2, ShieldAlert, Sprout, Leaf, Sun } from 'lucide-react';
+import { Bot, BrainCircuit, CloudSun, FlaskConical, Flower2, Home, Layers, LineChart, Map, Microscope, Ruler, Settings2, ShieldAlert, Sprout, Leaf, Sun } from 'lucide-react';
 import type { MessageKey } from '@/i18n';
 import type { FarmingMode } from '@/state/prefsStore';
 
@@ -43,10 +43,13 @@ export const NAV_ADVISERS: NavItem[] = [
   { to: '/app/garden/quantity', label: 'Quantity Analyser', key: 'nav.quantity', icon: Ruler },
 ];
 
+/** Administrators only — shown when the ML backend has confirmed an admin session (the server enforces access). */
+export const NAV_ADMIN: NavItem[] = [{ to: '/app/admin/ml', label: 'AI Model Training', key: 'nav.mlTraining', icon: BrainCircuit }];
+
 /** Which mode a path belongs to; null = shared (weather). Keeps the shell in step with deep links. */
 export function modeOfPath(path: string): FarmingMode | null {
   if (path.startsWith('/app/garden')) return 'rooftop';
-  if (path.startsWith('/app/weather')) return null;
+  if (path.startsWith('/app/weather') || path.startsWith('/app/admin')) return null;
   return 'field';
 }
 

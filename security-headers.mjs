@@ -5,9 +5,29 @@
  *
  * connect-src lists every external API the browser may call:
  *   Open-Meteo forecast + geocoding, India Post PIN lookup, BigDataCloud reverse geocoding,
- *   and Supabase Auth (only used when configured). Add your VITE_API_BASE origin here if you
- *   switch the data adapter to REST.
+ *   and Supabase Auth (only used when configured). The VITE_API_BASE origin (ML backend) is added
+ *   automatically by vite.config.ts via securityHeaders(); for Render add it to render.yaml by hand.
  */
+const BASE_CONNECT = "connect-src 'self' https://api.open-meteo.com https://geocoding-api.open-meteo.com https://api.postalpincode.in https://api.bigdatacloud.net https://*.supabase.co wss://*.supabase.co";
+
+/** Origin of VITE_API_BASE (the Kisan Drishti ML/API backend), or '' when unset or malformed. */
+export function apiOrigin(apiBase) {
+  try {
+    return apiBase ? new URL(apiBase).origin : '';
+  } catch {
+    return '';
+  }
+}
+
+export function buildCsp(apiBase = '') {
+  const origin = apiOrigin(apiBase);
+  return CSP.replace(BASE_CONNECT, origin ? `${BASE_CONNECT} ${origin}` : BASE_CONNECT);
+}
+
+export function securityHeaders(apiBase = '') {
+  return { ...SECURITY_HEADERS, 'Content-Security-Policy': buildCsp(apiBase) };
+}
+
 export const CSP = [
   "default-src 'self'",
   "script-src 'self'",

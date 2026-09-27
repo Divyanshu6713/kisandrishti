@@ -48,6 +48,8 @@ export interface AuthProvider {
   signOut(): Promise<void>;
   requestPasswordReset(email: string): Promise<void>;
   updatePassword(password: string): Promise<void>;
+  /** A server-verifiable access token (Supabase JWT), or null in Demo mode where there is no server identity. */
+  accessToken(): Promise<string | null>;
   /** Changes that happen outside this tab or outside user action (other tab logout, token refresh failure). */
   subscribe(cb: (session: AuthSession | null, event: SessionEvent) => void): () => void;
 }

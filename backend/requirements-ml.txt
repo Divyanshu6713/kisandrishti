@@ -1,0 +1,6 @@
+# PyTorch for training (worker) and inference (API). Install with the index that matches your hardware:
+#   NVIDIA GPU (CUDA 12.6):  pip install -r requirements-ml.txt --index-url https://download.pytorch.org/whl/cu126
+#   CPU only:                pip install -r requirements-ml.txt --index-url https://download.pytorch.org/whl/cpu
+# Versions are pinned for reproducibility (they are recorded in every model manifest too).
+torch==2.14.0
+torchvision==0.29.0

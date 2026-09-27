@@ -27,6 +27,7 @@ const Sunlight = lazy(() => import('@/pages/app/garden/Sunlight'));
 const Nutrients = lazy(() => import('@/pages/app/garden/Nutrients'));
 const Quantity = lazy(() => import('@/pages/app/garden/Quantity'));
 const GardenSetup = lazy(() => import('@/pages/app/garden/GardenSetup'));
+const MlTraining = lazy(() => import('@/pages/app/admin/MlTraining'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 function DocumentLang() {
@@ -93,6 +94,8 @@ export default function App() {
             <Route path="weather" element={<Weather />} />
             <Route path="advisor" element={<Advisor />} />
             <Route path="insights" element={<Insights />} />
+            {/* Admin-only; the ML backend authorises every request. */}
+            <Route path="admin/ml/*" element={<MlTraining />} />
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route

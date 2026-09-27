@@ -1,0 +1,7 @@
+# Local ML storage: datasets, model binaries, checkpoints, SQLite DB, session secret — never committed.
+storage/
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/

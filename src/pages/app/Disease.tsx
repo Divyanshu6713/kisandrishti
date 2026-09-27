@@ -1,10 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Check, Cpu, ImageUp, Loader2, NotebookPen, RotateCcw } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Check, Cpu, ImageUp, Loader2, NotebookPen, RotateCcw } from 'lucide-react';
 import { useEffect, useRef, useState, type DragEvent } from 'react';
 import { Link } from 'react-router';
-import type { Analysis, DiseaseAnalysisResult } from '@/models';
+import type { Analysis, DiseaseAnalysisResult, DiseaseModelCard } from '@/models';
 import { cn } from '@/lib/utils';
-import { DISEASE_SAMPLES, diseaseAnalysisService, farmDataService, ImageInputError, PIPELINE_STEPS, type FarmContext } from '@/services';
+import { DISEASE_SAMPLES, diseaseAnalysisService, farmDataService, ImageInputError, ModelUnavailableError, PIPELINE_STEPS, type FarmContext } from '@/services';
+import { AI_NOTICE } from '@/services/diseaseAnalysisService';
 import { toast } from '@/state/toastStore';
 import { ScenarioNote, WithFarm } from '@/components/farm/WithFarm';
 import { RecommendationCard } from '@/components/farm/RecommendationCard';
@@ -48,8 +49,10 @@ function ResultView({ run, ctx, onReset }: { run: Extract<Run, { phase: 'done' }
       </div>
     );
   const r = res.data;
-  const title = r.disease?.name ?? LABELS[r.prediction.label] ?? r.prediction.label;
+  const trained = !r.prediction.simulated;
+  const title = r.uncertain ? 'Unable to identify this condition reliably.' : (r.disease?.name ?? r.prediction.displayName ?? LABELS[r.prediction.label] ?? r.prediction.label);
   const score = r.prediction.score;
+  const top = r.prediction.topPredictions ?? [];
 
   const save = () => {
     if (!r.disease) return;
@@ -69,17 +72,31 @@ function ResultView({ run, ctx, onReset }: { run: Extract<Run, { phase: 'done' }
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE }}>
       <div className="flex flex-col gap-5 sm:flex-row">
         <div className="shrink-0">
-          <img src={run.preview} alt="Leaf photo after resizing to the model input" className="h-36 w-36 rounded-ctl border border-line object-cover" />
-          <p className="mt-1.5 text-center text-label text-ink-3">224 × 224 input</p>
+          <img src={run.preview} alt={trained ? 'Leaf photo that was analysed' : 'Leaf photo after resizing to the model input'} className="h-36 w-36 rounded-ctl border border-line object-cover" />
+          <p className="mt-1.5 text-center text-label text-ink-3">{trained ? 'Your photo' : '224 × 224 input'}</p>
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             {r.prediction.simulated && <Pill tone="warn">{run.sampleId ? 'Demo sample · simulated score' : 'No trained model connected'}</Pill>}
+            {trained && <Pill tone="neutral">{r.prediction.modelId}</Pill>}
+            {r.uncertain && <Pill tone="warn">Uncertain</Pill>}
             {r.disease && <LevelBadge level={r.riskLevel} prefix="Risk" />}
           </div>
           <h2 className="mt-3 text-h2">{title}</h2>
+          {r.uncertain && r.prediction.displayName && (
+            <p className="mt-2 text-sm text-ink-2">
+              Possible match: <span className="font-semibold text-ink">{r.prediction.displayName}</span> · Confidence {Math.round((score ?? 0) * 100)}%
+              <br />
+              Please upload a clearer image or consult an agricultural expert.
+            </p>
+          )}
           {r.disease && <p className="text-sm text-ink-3">{r.disease.cause}</p>}
-          {score !== null ? (
+          {r.cropMismatch && (
+            <p className="mt-2 flex items-start gap-2 text-sm text-warn">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden /> {r.cropMismatch}
+            </p>
+          )}
+          {r.uncertain ? null : score !== null ? (
             <div className="mt-4 max-w-xs">
               <div className="mb-1.5 flex justify-between text-sm">
                 <span className="text-ink-2">{r.prediction.simulated ? 'Simulated score' : 'Model confidence'}</span>
@@ -115,6 +132,36 @@ function ResultView({ run, ctx, onReset }: { run: Extract<Run, { phase: 'done' }
 
       {r.isHealthy && <p className="mt-5 rounded-ctl bg-accent-soft/60 px-4 py-3 text-sm text-ink-2">No disease pattern in this sample. Keep scouting — current weather still matters.</p>}
 
+      {trained && top.length > 1 && (
+        <div className="mt-5">
+          <p className="eyebrow mb-2">{r.uncertain ? 'Possible matches' : 'Top predictions'}</p>
+          <ul className="max-w-md space-y-1.5 text-sm">
+            {top.map((t) => (
+              <li key={t.classId} className="flex justify-between gap-3">
+                <span className="text-ink-2">{t.displayName}</span>
+                <span className="tabular font-semibold">{(t.probability * 100).toFixed(1)}%</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {trained && (
+        <p className="mt-5 flex items-start gap-2 rounded-ctl bg-sunken/60 px-4 py-3 text-sm text-ink-2">
+          <Cpu className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" aria-hidden />
+          <span>
+            {AI_NOTICE}
+            {r.prediction.model && (
+              <span className="mt-1 block text-label text-ink-3">
+                {r.prediction.model.name} v{r.prediction.model.version}
+                {r.prediction.model.datasetName ? ` · trained on ${r.prediction.model.datasetName} v${r.prediction.model.datasetVersion}` : ''}
+                {r.prediction.inferenceMs !== undefined ? ` · ${r.prediction.inferenceMs} ms` : ''}
+              </span>
+            )}
+          </span>
+        </p>
+      )}
+
       <ul className="mt-5 space-y-1 text-label text-ink-3">
         {r.caveats.map((c) => (
           <li key={c}>· {c}</li>
@@ -138,7 +185,7 @@ function ResultView({ run, ctx, onReset }: { run: Extract<Run, { phase: 'done' }
             </div>
           ))}
         </div>
-        {r.prediction.alternatives.length > 0 && (
+        {!trained && r.prediction.alternatives.length > 0 && (
           <p className="mt-3 text-sm text-ink-3">Other candidates: {r.prediction.alternatives.map((a) => `${a.label} ${Math.round(a.score * 100)}%`).join(' · ')}</p>
         )}
         <SourceTags className="mt-3" sources={res.basis.sources} />
@@ -178,6 +225,20 @@ function DiseaseBody({ ctx }: { ctx: FarmContext }) {
   const input = useRef<HTMLInputElement>(null);
   const samples = DISEASE_SAMPLES.filter((s) => s.crop === ctx.crop.id);
   const [thumbs, setThumbs] = useState<Record<string, string>>({});
+  const trained = diseaseAnalysisService.usesTrainedModel;
+  const [card, setCard] = useState<{ state: 'loading' } | { state: 'ready'; card: DiseaseModelCard } | { state: 'error'; message: string }>({ state: 'loading' });
+  useEffect(() => {
+    if (!trained) return;
+    let alive = true;
+    diseaseAnalysisService
+      .modelCard()
+      .then((c) => alive && setCard({ state: 'ready', card: c }))
+      .catch((e: unknown) => alive && setCard({ state: 'error', message: e instanceof Error ? e.message : 'Could not reach the disease identification service.' }));
+    return () => {
+      alive = false;
+    };
+  }, [trained]);
+  const unavailable = trained && card.state === 'ready' && !card.card.deployed;
 
   useEffect(() => {
     const t: Record<string, string> = {};
@@ -200,13 +261,14 @@ function DiseaseBody({ ctx }: { ctx: FarmContext }) {
       await new Promise((r) => setTimeout(r, 350));
       setRun({ phase: 'done', result, preview: image.previewUrl, sampleId });
     } catch (e) {
-      setRun({ phase: 'error', message: e instanceof ImageInputError ? e.message : 'Analysis failed. Please try again.' });
+      setRun({ phase: 'error', message: e instanceof ImageInputError || e instanceof ModelUnavailableError ? e.message : 'Analysis failed. Please try again.' });
     }
   };
 
   const onFiles = (files: FileList | null) => {
     const f = files?.[0];
-    if (f) analyse(f);
+    if (f && !unavailable) analyse(f);
+    if (input.current) input.current.value = '';
   };
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
@@ -217,13 +279,36 @@ function DiseaseBody({ ctx }: { ctx: FarmContext }) {
   return (
     <>
       <ScenarioNote ctx={ctx} />
-      <PageHeader eyebrow="Disease Analysis" title="Check a leaf" description="Upload a close-up photo of one leaf, or pick a demo sample. You’ll see each step of the analysis." />
+      <PageHeader
+        eyebrow="Disease Analysis"
+        title="Check a leaf"
+        description={trained ? 'Upload a close-up photo of one leaf. You’ll see each step of the analysis.' : 'Upload a close-up photo of one leaf, or pick a demo sample. You’ll see each step of the analysis.'}
+      />
 
       <Reveal className="mb-6 flex items-start gap-3 rounded-card border border-line bg-sunken/50 p-4 text-sm">
         <Cpu className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" aria-hidden />
-        <p className="text-ink-2">
-          <span className="font-semibold text-ink">No trained disease model is connected yet.</span> Preprocessing and colour measurement run for real. The demo classifier returns reference labels for the bundled samples only — the Kisan Drishti model will plug into the same step.
-        </p>
+        {!trained ? (
+          <p className="text-ink-2">
+            <span className="font-semibold text-ink">No trained disease model is connected yet.</span> Preprocessing and colour measurement run for real. The demo classifier returns reference labels for the bundled samples only — the Kisan Drishti model will plug into the same step.
+          </p>
+        ) : card.state === 'loading' ? (
+          <p className="text-ink-2">Checking the disease identification service…</p>
+        ) : card.state === 'error' ? (
+          <p className="text-ink-2" role="alert">
+            <span className="font-semibold text-ink">Disease identification is unavailable right now.</span> {card.message}
+          </p>
+        ) : !card.card.deployed ? (
+          <p className="text-ink-2" role="status">
+            <span className="font-semibold text-ink">Disease identification is temporarily unavailable</span> because no trained model is currently deployed.
+          </p>
+        ) : (
+          <p className="text-ink-2">
+            <span className="font-semibold text-ink">
+              {card.card.model.name} v{card.card.model.model_version}
+            </span>{' '}
+            · trained on {card.card.model.dataset_name} v{card.card.model.dataset_version} · recognises {card.card.classes.length} conditions. {AI_NOTICE} It can only choose among the conditions it was trained on.
+          </p>
+        )}
       </Reveal>
 
       <div className="grid gap-5 lg:grid-cols-12">
@@ -241,12 +326,13 @@ function DiseaseBody({ ctx }: { ctx: FarmContext }) {
               <ImageUp className="h-8 w-8 text-ink-3" aria-hidden />
               <p className="mt-3 font-semibold">Drop a leaf photo here</p>
               <p className="text-sm text-ink-3">JPG, PNG or WebP · up to 8 MB</p>
-              <button type="button" className="btn-secondary mt-4" onClick={() => input.current?.click()} disabled={run.phase === 'running'}>
+              <button type="button" className="btn-secondary mt-4" onClick={() => input.current?.click()} disabled={run.phase === 'running' || unavailable}>
                 Choose photo
               </button>
               <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => onFiles(e.target.files)} aria-label="Upload leaf photo" />
             </div>
           </Reveal>
+          {!trained && (
           <Reveal className="card card-pad" delay={0.05}>
             <p className="eyebrow mb-3">Or try a demo sample</p>
             <div className="grid grid-cols-2 gap-3">
@@ -265,6 +351,7 @@ function DiseaseBody({ ctx }: { ctx: FarmContext }) {
             </div>
             <p className="mt-3 text-label text-ink-3">Samples are illustrations with a reference label, for demonstration only.</p>
           </Reveal>
+          )}
         </div>
 
         <section className="card card-pad min-h-[420px] lg:col-span-7" aria-live="polite">

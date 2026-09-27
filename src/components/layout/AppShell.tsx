@@ -6,11 +6,12 @@ import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { cn } from '@/lib/utils';
 import { FarmContextProvider } from '@/hooks/useFarmContext';
-import { ENGINE } from '@/services';
+import { ENGINE, serviceConfig } from '@/services';
 import { useFarmStore } from '@/state/farmStore';
 import { toast } from '@/state/toastStore';
 import { useUiStore } from '@/state/uiStore';
 import { useAuthStore } from '@/state/authStore';
+import { useMlAdmin } from '@/state/mlAdminStore';
 import { useGardenStore } from '@/state/gardenStore';
 import { usePrefs, type FarmingMode } from '@/state/prefsStore';
 import { useLang, useT } from '@/i18n';
@@ -20,7 +21,7 @@ import { Skeleton } from '@/components/ui/primitives';
 import { LanguageToggle, Logo, ThemeToggle } from './brand';
 import { FarmSwitcher } from './FarmSwitcher';
 import { GardenSwitcher } from './GardenSwitcher';
-import { NAV_ADVISERS, NAV_PRIMARY, NAV_ROOFTOP, NAV_TOOLS, ENGINE_ICON, TRANSLATED_PATHS, modeOfPath, type NavItem } from './nav';
+import { NAV_ADMIN, NAV_ADVISERS, NAV_PRIMARY, NAV_ROOFTOP, NAV_TOOLS, ENGINE_ICON, TRANSLATED_PATHS, modeOfPath, type NavItem } from './nav';
 import { TourBar } from './TourBar';
 import { preloadAppPages } from '@/lib/preload';
 
@@ -146,6 +147,7 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
   const resetDemo = useFarmStore((s) => s.resetDemo);
   const resetGarden = useGardenStore((s) => s.resetDemo);
   const rooftop = mode === 'rooftop';
+  const isMlAdmin = useMlAdmin((s) => s.status === 'signed-in');
   return (
     <div className="flex h-full flex-col gap-7 px-4 py-6">
       <div className="space-y-4">
@@ -164,6 +166,7 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
             <NavGroup title={t('shell.tools')} items={NAV_TOOLS} onNavigate={onNavigate} />
           </>
         )}
+        {isMlAdmin && <NavGroup title={t('shell.admin')} items={NAV_ADMIN} onNavigate={onNavigate} />}
       </nav>
       <div className="mt-auto space-y-3 border-t border-line pt-5">
         <div className="flex items-start gap-2.5 px-1 text-label text-ink-3" title={ENGINE.description}>
@@ -171,7 +174,7 @@ function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
           <span>
             {t('shell.demoData')}
             <br />
-            {t('shell.noModel')}
+            {t(serviceConfig.diseaseModel === 'remote' ? 'shell.diseaseModel' : 'shell.noModel')}
           </span>
         </div>
         <button

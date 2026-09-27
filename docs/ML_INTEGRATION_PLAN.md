@@ -1,6 +1,6 @@
 # Kisan Drishti — Production ML Integration Plan (Disease Analysis)
 
-Status: **PLAN ONLY. Nothing below has been implemented, trained, moved or uploaded.**
+Status: **Superseded in part (26 Sep 2026)** — the dataset → training → registry → deployment → inference system is implemented; see [ML_TRAINING_SYSTEM.md](ML_TRAINING_SYSTEM.md). This document remains the longer-term plan (calibration, OOD set, field test set, per-crop comparison, hosting).
 Prepared: 24 Sep 2026 · Scope: turn the prototype disease analysis into a real, measured, ML-backed service.
 
 ---
