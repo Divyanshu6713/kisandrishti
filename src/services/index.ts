@@ -18,7 +18,7 @@ export { assistantService, SUGGESTED_QUESTIONS } from './assistantService';
 export type { AssistantAnswer } from './assistantService';
 export { loadFarmContext } from './farmContextService';
 export type { FarmContext } from './farmContextService';
-export { DISEASE_SAMPLES } from './disease/classifiers';
+export { DISEASE_SAMPLES, ModelUnavailableError } from './disease/classifiers';
 export type { DiseaseSample } from './disease/classifiers';
 export { ImageInputError } from './disease/imagePreprocessing';
 export { DEMO_FARM_ID } from './data';

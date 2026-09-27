@@ -1,0 +1,6 @@
+# Web API + dataset validation (installed on the API server).
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pillow==12.3.0
+numpy==2.5.2
+pyjwt[crypto]==2.15.0

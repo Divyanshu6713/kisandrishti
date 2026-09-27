@@ -3,6 +3,7 @@ import { AuthError, authProvider, type AuthSession, type Identifier } from '@/se
 import { useLiveWeather } from './liveWeatherStore';
 import { useTourStore } from './tourStore';
 import { useUiStore } from './uiStore';
+import { useMlAdmin } from './mlAdminStore';
 
 /**
  * Session state for the whole app. `status` starts as 'loading' until the provider has
@@ -31,6 +32,7 @@ function clearUserState() {
   useTourStore.getState().stop();
   useUiStore.getState().closeAssistant();
   useUiStore.getState().setNav(false);
+  useMlAdmin.getState().signOut();
 }
 
 let started = false;

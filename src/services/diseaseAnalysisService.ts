@@ -12,19 +12,28 @@ import type {
 import { insufficient } from '@/models';
 import { round } from '@/lib/utils';
 import { knowledge } from './data';
-import { activeClassifier } from './disease/classifiers';
+import { activeClassifier, fetchDiseaseModelCard } from './disease/classifiers';
 import { preprocess } from './disease/imagePreprocessing';
 
 /**
  * Disease analysis pipeline:
  *   image → preprocessing → classifier (demo | trained model) → prediction + confidence
  *         → knowledge lookup → recommendation engine → result
+ *
+ * Classification ("what does the image most resemble?") and guidance ("what should the farmer do?")
+ * stay separate: the model only returns a class and probabilities; advice comes from the verified
+ * knowledge entries in diseases.json, linked through data/disease-class-map.json. A class without a
+ * verified entry gets no advice — the result says so instead.
  */
 
 const MIN_LEAF_COVERAGE = 0.12;
 const MIN_CONFIDENT_SCORE = 0.6;
 
-export const PIPELINE_STEPS = ['Check photo', 'Resize to 224 × 224', 'Measure leaf colours', 'Classify', 'Build guidance'] as const;
+export const PIPELINE_STEPS: readonly string[] = activeClassifier.isTrainedModel
+  ? ['Check photo', 'Measure leaf colours', 'Send to the model', 'Classify', 'Build guidance']
+  : ['Check photo', 'Resize to 224 × 224', 'Measure leaf colours', 'Classify', 'Build guidance'];
+
+export const AI_NOTICE = 'AI-assisted crop condition identification. Use this result as decision support rather than a definitive agricultural diagnosis.';
 
 function describe(f: PreprocessedImage['features']): string {
   const pct = (x: number) => `${Math.round(x * 100)}%`;
@@ -78,6 +87,7 @@ export const diseaseAnalysisService = {
   classifierId: activeClassifier.id,
   usesTrainedModel: activeClassifier.isTrainedModel,
   preprocess,
+  modelCard: fetchDiseaseModelCard,
 
   async analyze(args: { image: PreprocessedImage; farm: Farm; crop: CropInfo; risks: RiskResult[] }): Promise<Analysis<DiseaseAnalysisResult>> {
     const { image, crop, risks } = args;
@@ -87,8 +97,16 @@ export const diseaseAnalysisService = {
 
     const prediction = await activeClassifier.classify(image, { crop: crop.id });
     const catalogue = await knowledge.diseases();
-    const disease = catalogue.find((d) => d.id === prediction.label) ?? null;
-    const isHealthy = prediction.label === 'healthy';
+    const uncertain = prediction.status === 'uncertain';
+    const trained = !prediction.simulated;
+    const known = catalogue.find((d) => d.id === prediction.label) ?? null;
+    const isHealthy = !uncertain && (prediction.isHealthy ?? prediction.label === 'healthy');
+    const cropMismatch =
+      trained && !uncertain && prediction.crop && prediction.crop.toLowerCase() !== crop.name.toLowerCase() && prediction.crop.toLowerCase() !== crop.id.toLowerCase()
+        ? `This looks like a ${prediction.crop.toLowerCase()} leaf, but this farm grows ${crop.name.toLowerCase()}. Check that the photo is from this farm.`
+        : null;
+    // Advice only for confident, crop-consistent results that map to a verified knowledge entry.
+    const disease = !uncertain && !cropMismatch ? known : null;
     const caveats: string[] = [];
 
     if (prediction.simulated)
@@ -97,7 +115,11 @@ export const diseaseAnalysisService = {
           ? 'Demo sample: the result is the sample’s reference label with a simulated score — not a trained-model prediction.'
           : 'No trained model is connected yet, so the disease cannot be identified from your photo. The colour measurements above are real.',
       );
-    if (prediction.score !== null && prediction.score < MIN_CONFIDENT_SCORE) caveats.push('Low confidence — treat as a hint and confirm in the field.');
+    if (trained) {
+      if (uncertain) caveats.push('Please upload a clearer image (one leaf, daylight, in focus) or consult an agricultural expert.');
+      else if (!isHealthy && !known) caveats.push('Kisan Drishti has no verified guidance for this condition yet, so no treatment advice is shown. Please consult your local KVK or agriculture officer.');
+      if (prediction.notice) caveats.push(prediction.notice);
+    } else if (prediction.score !== null && prediction.score < MIN_CONFIDENT_SCORE) caveats.push('Low confidence — treat as a hint and confirm in the field.');
     caveats.push('Always confirm with a local agriculture officer / KVK before acting on a disease result.');
 
     let riskLevel: Level = 'low';
@@ -115,6 +137,9 @@ export const diseaseAnalysisService = {
       observedPattern: describe(f),
       recommendations: disease ? recsFor(disease, riskLevel, crop, prediction.score, prediction.simulated) : [],
       caveats,
+      uncertain,
+      cropMismatch,
+      guidanceAvailable: Boolean(disease) || isHealthy,
     };
 
     return {
@@ -123,7 +148,8 @@ export const diseaseAnalysisService = {
       basis: {
         factors: [
           { label: 'Classifier', value: prediction.modelId },
-          { label: 'Input', value: `${image.tensorSize}×${image.tensorSize} px` },
+          ...(prediction.model?.datasetName ? [{ label: 'Trained on', value: `${prediction.model.datasetName} v${prediction.model.datasetVersion}` }] : []),
+          { label: 'Input', value: trained ? 'Original photo (model preprocessing on the server)' : `${image.tensorSize}×${image.tensorSize} px` },
           { label: 'Crop', value: crop.name },
         ],
         sources: prediction.simulated ? ['demo-rules'] : ['model-api'],

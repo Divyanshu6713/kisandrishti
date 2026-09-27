@@ -3,7 +3,7 @@
 **Intelligent Farming. Better Decisions.**
 An interactive web prototype that goes from understanding the farm to analysing it, predicting risks, recommending actions (organic-first), acting on them and improving.
 
-> Prototype honesty: farm numbers come from **sample farm data** plus a **transparent rule engine**. No trained model is connected yet. The UI labels this everywhere (provenance chips, "simulated score" on disease samples, "Sample forecast").
+> Prototype honesty: farm numbers come from **sample farm data** plus a **transparent rule engine**. Crop-disease identification can now use a **real trained model** from your own dataset through the admin-only *AI Model Training* system (`backend/`, see [docs/ML_TRAINING_SYSTEM.md](docs/ML_TRAINING_SYSTEM.md)); no model has been trained on real data yet. The UI labels this everywhere (provenance chips, "simulated score" on disease samples, "Sample forecast").
 > **Weather is the exception:** the Weather page and the Overview weather card show **live Open-Meteo data** for any place in India, marked "Live" with the time it was fetched.
 
 ## Run
@@ -143,7 +143,7 @@ Datasets (JSON today)                 src/data/*.json   ·   typed contracts in 
 | `soilAnalysisService` | ranges come from `data/soil-ranges.json` or an API |
 | `cropAnalysisService.assessHealth` | same signature, trained crop-health model |
 | `riskPredictionService` | `VITE_RISK_MODEL=remote` → `POST /v1/models/risk/predict` (same `RiskInputs`) |
-| `diseaseAnalysisService` | `VITE_DISEASE_MODEL=remote` → `POST /v1/models/disease/predict` (224×224 image), or add an ONNX/TF.js `DiseaseClassifier` |
+| `diseaseAnalysisService` | **Implemented:** `VITE_DISEASE_MODEL=remote` → `POST /v1/disease/predict` (original photo; server applies the deployed model's own preprocessing). See `docs/ML_TRAINING_SYSTEM.md` |
 | `organicRecommendationService` | practices + condition tags from the verified organic dataset |
 | `recommendationService` (Farm Advisor) | combines all of the above; reports data completeness |
 | `assistantService` | `VITE_ASSISTANT=remote` → `POST /v1/assistant` with `buildAssistantContext()` |

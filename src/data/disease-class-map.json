@@ -1,0 +1,7 @@
+{
+  "_meta": {
+    "purpose": "Maps trained-model class IDs (dataset folder names, e.g. \"Wheat___Yellow_rust\") to verified knowledge entries in diseases.json (e.g. \"yellow-rust\"). Only add a mapping after checking that the knowledge entry really describes that class.",
+    "rule": "Unmapped classes still show the model's prediction, but no treatment or prevention advice — the app says that no verified guidance exists yet. Never invent advice for an unmapped class."
+  },
+  "map": {}
+}

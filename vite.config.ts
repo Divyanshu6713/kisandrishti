@@ -1,12 +1,13 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
-import { SECURITY_HEADERS } from './security-headers.mjs';
+import { securityHeaders } from './security-headers.mjs';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
-  preview: { headers: SECURITY_HEADERS },
+  // connect-src also allows the ML backend origin from VITE_API_BASE.
+  preview: { headers: securityHeaders(loadEnv(mode, process.cwd(), 'VITE_').VITE_API_BASE ?? '') },
   build: {
     target: 'es2022',
     chunkSizeWarningLimit: 1200,
@@ -20,4 +21,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

@@ -140,6 +140,11 @@ export function createSupabaseProvider(url: string, anonKey: string): AuthProvid
       if (error) throw mapError(error);
     },
 
+    async accessToken() {
+      const { data } = await (await client()).auth.getSession();
+      return data.session?.access_token ?? null;
+    },
+
     subscribe(cb) {
       let unsub = () => {};
       let closed = false;

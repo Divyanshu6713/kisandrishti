@@ -87,6 +87,10 @@ export const demoProvider: AuthProvider = {
     throw notEnabled();
   },
 
+  async accessToken() {
+    return null; // demo sessions exist only in this browser — no server can verify them
+  },
+
   subscribe(cb) {
     // Logging out in another tab ends this tab's session too.
     const onStorage = (e: StorageEvent) => {

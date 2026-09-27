@@ -106,7 +106,7 @@ export async function preprocess(src: File | string, sampleId?: string): Promise
     ctx.drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE);
     const pixels = ctx.getImageData(0, 0, MODEL_INPUT_SIZE, MODEL_INPUT_SIZE);
 
-    return { tensorSize: MODEL_INPUT_SIZE, pixels, previewUrl: canvas.toDataURL('image/jpeg', 0.9), features: measure(pixels), sampleId };
+    return { tensorSize: MODEL_INPUT_SIZE, pixels, previewUrl: canvas.toDataURL('image/jpeg', 0.9), features: measure(pixels), sampleId, source: src instanceof File ? src : undefined };
   } finally {
     if (src instanceof File) URL.revokeObjectURL(url);
   }
